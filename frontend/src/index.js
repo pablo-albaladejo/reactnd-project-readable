@@ -1,8 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { BrowserRouter } from 'react-router-dom';
+
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import App from './App';
+
+import Home from './screens/Home/';
+
 import registerServiceWorker from './registerServiceWorker';
 
 //REDUX
@@ -25,9 +30,14 @@ const store = createStore(
     composeEnhancers(applyMiddleware(thunk, logger))
 )
 
-ReactDOM.render((
-    <Provider store={store}>
-        <App />
-    </Provider>
-),  document.getElementById('root'));
+ReactDOM.render(
+    <BrowserRouter
+        //https://github.com/facebook/create-react-app/issues/2959
+        basename={process.env.PUBLIC_URL}
+    >
+        <Provider store={store}>
+            <Home />
+        </Provider>
+    </BrowserRouter>
+    , document.getElementById('root'));
 registerServiceWorker();
