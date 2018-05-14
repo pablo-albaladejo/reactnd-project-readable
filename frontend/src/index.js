@@ -34,7 +34,7 @@ ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter
             //https://github.com/facebook/create-react-app/issues/2959
-            //basename={process.env.PUBLIC_URL}
+            basename={process.env.PUBLIC_URL}
         >
             <Home />
         </BrowserRouter>

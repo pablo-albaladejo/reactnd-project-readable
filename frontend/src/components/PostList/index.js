@@ -22,7 +22,7 @@ class PostList extends Component {
                 <tbody>
                     {this.props.posts.map((post, index) => {
                         return (
-                            <tr key={index} onClick={() => { this.props.history.push('/post/' + post.id) }}>
+                            <tr key={index} onClick={() => { this.props.history.push('/posts/' + post.id) }}>
                                 <td>{index + 1}</td>
                                 <td>{post.voteScore}</td>
                                 <td>{post.title}</td>
