@@ -1,10 +1,10 @@
-import { FETCH_ALL_COMMENTS } from '../actions/actionTypes';
+import { FETCH_POST_BY_ID } from "../actions/actionTypes";
 
 function comments(state = {}, action) {
 
     switch (action.type) {
 
-        case FETCH_ALL_COMMENTS:
+        case FETCH_POST_BY_ID:
             return action.comments;
 
         default:

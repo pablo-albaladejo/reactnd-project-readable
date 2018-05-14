@@ -29,6 +29,29 @@ class APIService {
     getAllPosts() {
         return this.apiRequest(this.BASE_URL + this.POSTS_URL, this.GET_METHOD, null);
     }
+    getPostById(postId) {
+        return new Promise((resolve, reject) => {
+
+
+            Promise.all([
+                //get post details
+                this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId, this.GET_METHOD, null),
+                
+                //get post comments
+                this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId + "/" + this.COMMENTS_URL, this.GET_METHOD, null),
+            ]).then(result => {
+                
+                //post details
+                let post = {};
+                post[postId] = result[0];
+                
+                //post comments
+                let comments = result[1]
+                
+                resolve([post, comments]);
+            })
+        });
+    }
 
     /* COMMENTS */
     getAllComments(postId) {

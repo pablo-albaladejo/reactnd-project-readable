@@ -31,13 +31,14 @@ const store = createStore(
 )
 
 ReactDOM.render(
-    <BrowserRouter
-        //https://github.com/facebook/create-react-app/issues/2959
-        basename={process.env.PUBLIC_URL}
-    >
-        <Provider store={store}>
+    <Provider store={store}>
+        <BrowserRouter
+            //https://github.com/facebook/create-react-app/issues/2959
+            //basename={process.env.PUBLIC_URL}
+        >
             <Home />
-        </Provider>
-    </BrowserRouter>
+        </BrowserRouter>
+    </Provider>
+
     , document.getElementById('root'));
 registerServiceWorker();

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { getAllPosts } from '../../actions/posts';
+import { 
+    getAllPosts,
+    getAllCategories 
+} from '../../actions/';
 
 import PostList from '../../components/PostList';
 
@@ -9,13 +12,12 @@ class PostListScreen extends Component {
 
     componentWillMount() {
         this.props.dispatch(getAllPosts());
+        this.props.dispatch(getAllCategories());
     }
 
     render() {
-
-        console.log(this.props.posts);
         return (
-            <PostList 
+            <PostList
                 posts={this.props.posts}
             />
         );

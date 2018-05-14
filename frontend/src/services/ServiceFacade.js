@@ -15,6 +15,10 @@ class ServiceFacade {
     static getAllPosts() {
         return APIService.getInstance().getAllPosts();
     }
+    static getPostById(postId){
+        return APIService.getInstance().getPostById(postId);
+    }
+
     /* Comments */
     static getAllComments(postId) {
         return APIService.getInstance().getAllComments(postId);
