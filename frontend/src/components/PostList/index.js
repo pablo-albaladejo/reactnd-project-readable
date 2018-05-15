@@ -6,7 +6,24 @@ import { withRouter } from 'react-router-dom';
 import { Table } from 'reactstrap';
 import moment from 'moment';
 
+import { connect } from 'react-redux';
+import {
+    getAllPosts,
+} from '../../actions/';
+
 class PostList extends Component {
+
+    componentWillMount() {
+        this.props.dispatch(getAllPosts(this.props.category));
+    }
+
+    componentDidUpdate(prevProps) {
+        //https://stackoverflow.com/a/36190071/3395884
+        if (prevProps.category !== this.props.category) {
+            this.props.dispatch(getAllPosts(this.props.category));
+        }
+    }
+
     render() {
         return (
             <Table hover>
@@ -36,4 +53,16 @@ class PostList extends Component {
         );
     }
 }
-export default withRouter(PostList);
+function mapStateToProps(state, ownProps) {
+    let posts = [];
+
+    Object.keys(state.posts).forEach(post_id => {
+        let post = state.posts[post_id];
+        posts.push(post);
+    });
+
+    return {
+        posts,
+    }
+}
+export default withRouter(connect(mapStateToProps)(PostList));

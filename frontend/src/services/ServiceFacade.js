@@ -12,9 +12,10 @@ class ServiceFacade {
     }
 
     /* Posts */
-    static getAllPosts() {
-        return APIService.getInstance().getAllPosts();
+    static getAllPosts(category) {
+        return APIService.getInstance().getAllPosts(category);
     }
+
     static getPostById(postId){
         return APIService.getInstance().getPostById(postId);
     }

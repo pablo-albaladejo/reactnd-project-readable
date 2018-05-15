@@ -7,8 +7,8 @@ import {
 import ServiceFacade from '../services/ServiceFacade';
 
 /* getAllPosts */
-export const getAllPosts = () => dispatch => (
-    ServiceFacade.getAllPosts()
+export const getAllPosts = (category) => dispatch => (
+    ServiceFacade.getAllPosts(category)
         .then(posts => {
             dispatch(fetchAllPosts(posts));
         }).catch(err => {

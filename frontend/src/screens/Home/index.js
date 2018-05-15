@@ -19,8 +19,9 @@ class Home extends Component {
           <Route path='/posts/:id' component={PostScreen} />
 
           {/* PostList */}
+          <Route path='/:category' component={PostListScreen} />
           <Route path='/' component={PostListScreen} />
-
+      
         </Switch>
       </div>
 

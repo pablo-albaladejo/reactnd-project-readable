@@ -22,13 +22,28 @@ class APIService {
 
     /* CATEGORIES */
     getAllCategories() {
-        return this.apiRequest(this.BASE_URL + this.CATEGORIES_URL, this.GET_METHOD, null);
+        return new Promise((resolve, reject) => {
+            this.apiRequest(this.BASE_URL + this.CATEGORIES_URL, this.GET_METHOD, null)
+                .then(result => {
+                    resolve(result.categories);
+                }).catch(err => {
+                    console.warn(err);
+                    reject(err);
+                });
+        });
     }
 
     /* POSTS */
-    getAllPosts() {
-        return this.apiRequest(this.BASE_URL + this.POSTS_URL, this.GET_METHOD, null);
+    getAllPosts(category) {
+
+        let category_filter = "";
+        if (category) {
+            category_filter = category + "/";
+        }
+
+        return this.apiRequest(this.BASE_URL + category_filter + this.POSTS_URL, this.GET_METHOD, null);
     }
+
     getPostById(postId) {
         return new Promise((resolve, reject) => {
 
@@ -36,18 +51,18 @@ class APIService {
             Promise.all([
                 //get post details
                 this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId, this.GET_METHOD, null),
-                
+
                 //get post comments
                 this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId + "/" + this.COMMENTS_URL, this.GET_METHOD, null),
             ]).then(result => {
-                
+
                 //post details
                 let post = {};
                 post[postId] = result[0];
-                
+
                 //post comments
                 let comments = result[1]
-                
+
                 resolve([post, comments]);
             })
         });

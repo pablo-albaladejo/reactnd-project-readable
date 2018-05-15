@@ -9,11 +9,16 @@ import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
 const UserBreadcrumb = ({ match }) =>
   <span>{match.params.userId}</span>; // use match param userId to fetch/display user name
 
+const CategoryBreadcrumb = ({ match }) =>
+  <span>Category: {match.params.category}</span>; // use match param userId to fetch/display user name
+
 // define some custom breadcrumbs for certain routes (optional)
 const routes = [
   { path: '/users/:userId', breadcrumb: UserBreadcrumb },
   { path: '/example', breadcrumb: 'Custom Example' },
+  { path: '/posts/', breadcrumb: null },
   { path: '/posts/:postId', breadcrumb: 'Post details' },
+  { path: '/:category', breadcrumb: CategoryBreadcrumb },
 ];
 
 // map & render your breadcrumb components however you want.
