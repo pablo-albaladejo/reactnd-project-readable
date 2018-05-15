@@ -1,15 +1,18 @@
 
 import React, { Component } from 'react';
 
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
-import { Table } from 'reactstrap';
+import { Table, Button } from 'reactstrap';
 import moment from 'moment';
 
 import { connect } from 'react-redux';
 import {
     getAllPosts,
 } from '../../actions/';
+
+import SortTitle from '../../components/SortTitle';
+import VoteScore from '../../components/VoteScore';
 
 class PostList extends Component {
 
@@ -24,27 +27,76 @@ class PostList extends Component {
         }
     }
 
+    onDownVote = (postId) => {
+        console.log("post " + postId + " downvote");
+    }
+
+    onUpVote = (postId) => {
+        console.log("post " + postId + " upvote");
+    }
+
+    onVotesSortAscending = () => {
+        console.log("sort votes ascending");
+    }
+    onVotesSortDescending = () => {
+        console.log("sort votes descending");
+    }
+
+    onDateSortAscending = () => {
+        console.log("sort date ascending");
+    }
+    onDateSortDescending = () => {
+        console.log("sort date descending");
+    }
+
     render() {
         return (
             <Table hover>
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Votes</th>
+                        <th>
+                            <SortTitle
+                                title={"Votes"}
+                                onSortAscending={this.onVotesSortAscending}
+                                onSortDescending={this.onVotesSortDescending}
+                            />
+                        </th>
                         <th>Title</th>
                         <th>User</th>
-                        <th>Date</th>
+                        <th>Comments</th>
+                        <th>Category</th>
+                        <th>
+                            <SortTitle
+                                title={"Date"}
+                                onSortAscending={this.onDateSortAscending}
+                                onSortDescending={this.onDateSortDescending}
+                            />
+                        </th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {this.props.posts.map((post, index) => {
                         return (
-                            <tr key={index} onClick={() => { this.props.history.push('/posts/' + post.id) }}>
+                            <tr key={index}>
                                 <td>{index + 1}</td>
-                                <td>{post.voteScore}</td>
-                                <td>{post.title}</td>
+                                <td>
+                                    <VoteScore
+                                        id={post.id}
+                                        value={post.voteScore}
+                                        onDownVote={this.onDownVote}
+                                        onUpVote={this.onUpVote}
+                                    />
+                                </td>
+                                <td><Link to={'/posts/' + post.id}>{post.title}</Link></td>
                                 <td>{post.author}</td>
+                                <td>{post.commentCount}</td>
+                                <td>{post.category}</td>
                                 <td>{moment(post.timestamp).fromNow()}</td>
+                                <td>
+                                    <Button color="warning">Edit</Button>{' '}<Button color="danger">Delete</Button>
+                                </td>
                             </tr>
                         )
                     })}
@@ -66,3 +118,4 @@ function mapStateToProps(state, ownProps) {
     }
 }
 export default withRouter(connect(mapStateToProps)(PostList));
+//onClick={() => { this.props.history.push('/posts/' + post.id) }}
