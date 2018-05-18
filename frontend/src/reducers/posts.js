@@ -1,4 +1,4 @@
-import { FETCH_ALL_POSTS, FETCH_POST_BY_ID } from '../actions/actionTypes';
+import { FETCH_ALL_POSTS, FETCH_POST_BY_ID, UPDATE_POST_VOTESCORE } from '../actions/actionTypes';
 
 function posts(state = {}, action) {
 
@@ -10,6 +10,11 @@ function posts(state = {}, action) {
         case FETCH_POST_BY_ID:
             return action.post;
 
+        case UPDATE_POST_VOTESCORE:
+            return {
+                ...state,
+                [action.post.id]: action.post,
+            };
         default:
             return state;
     }

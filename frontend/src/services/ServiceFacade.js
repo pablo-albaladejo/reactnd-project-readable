@@ -15,9 +15,11 @@ class ServiceFacade {
     static getAllPosts(category) {
         return APIService.getInstance().getAllPosts(category);
     }
-
     static getPostById(postId){
         return APIService.getInstance().getPostById(postId);
+    }
+    static updatePostVoteScore(postId, upVote){
+        return APIService.getInstance().updatePostVoteScore(postId,upVote);
     }
 
     /* Comments */

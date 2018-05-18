@@ -9,6 +9,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import {
     getAllPosts,
+    updatePostVoteScore,
 } from '../../actions/';
 
 import SortTitle from '../../components/SortTitle';
@@ -38,11 +39,11 @@ class PostList extends Component {
     }
 
     onDownVote = (postId) => {
-        console.log("post " + postId + " downvote");
+        this.props.dispatch(updatePostVoteScore(postId, false));
     }
 
     onUpVote = (postId) => {
-        console.log("post " + postId + " upvote");
+        this.props.dispatch(updatePostVoteScore(postId, true));
     }
 
     onOrderBy = (orderByCriteria) => {
@@ -52,7 +53,6 @@ class PostList extends Component {
     }
 
     orderByCriteria = (list, criteria) => {
-        console.log(list);
         switch (criteria) {
             case this.ORDER_BY_DATE_ASCENDING:
                 return list.sort(function (a, b) {
@@ -88,57 +88,60 @@ class PostList extends Component {
         let posts = this.orderByCriteria(this.props.posts, this.state.orderBy);
 
         return (
-            <Table hover>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>
-                            <SortTitle
-                                title={"Votes"}
-                                onSortAscending={() => this.onOrderBy(this.ORDER_BY_VOTES_ASCENDING)}
-                                onSortDescending={() => this.onOrderBy(this.ORDER_BY_VOTES_DESCENDING)}
-                            />
-                        </th>
-                        <th>Title</th>
-                        <th>User</th>
-                        <th>Comments</th>
-                        <th>Category</th>
-                        <th>
-                            <SortTitle
-                                title={"Date"}
-                                onSortAscending={() => this.onOrderBy(this.ORDER_BY_DATE_ASCENDING)}
-                                onSortDescending={() => this.onOrderBy(this.ORDER_BY_DATE_DESCENDING)}
-                            />
-                        </th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {posts.map((post, index) => {
-                        return (
-                            <tr key={index}>
-                                <td>{index + 1}</td>
-                                <td>
-                                    <VoteScore
-                                        id={post.id}
-                                        value={post.voteScore}
-                                        onDownVote={this.onDownVote}
-                                        onUpVote={this.onUpVote}
-                                    />
-                                </td>
-                                <td><Link to={'/posts/' + post.id}>{post.title}</Link></td>
-                                <td>{post.author}</td>
-                                <td>{post.commentCount}</td>
-                                <td>{post.category}</td>
-                                <td>{moment(post.timestamp).fromNow()}</td>
-                                <td>
-                                    <Button color="warning">Edit</Button>{' '}<Button color="danger">Delete</Button>
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </Table>
+            <div>
+                <Button color="primary">New post</Button>
+                <Table hover>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>
+                                <SortTitle
+                                    title={"Votes"}
+                                    onSortAscending={() => this.onOrderBy(this.ORDER_BY_VOTES_ASCENDING)}
+                                    onSortDescending={() => this.onOrderBy(this.ORDER_BY_VOTES_DESCENDING)}
+                                />
+                            </th>
+                            <th>Title</th>
+                            <th>User</th>
+                            <th>Comments</th>
+                            <th>Category</th>
+                            <th>
+                                <SortTitle
+                                    title={"Date"}
+                                    onSortAscending={() => this.onOrderBy(this.ORDER_BY_DATE_ASCENDING)}
+                                    onSortDescending={() => this.onOrderBy(this.ORDER_BY_DATE_DESCENDING)}
+                                />
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {posts.map((post, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{index + 1}</td>
+                                    <td>
+                                        <VoteScore
+                                            id={post.id}
+                                            value={post.voteScore}
+                                            onDownVote={this.onDownVote}
+                                            onUpVote={this.onUpVote}
+                                        />
+                                    </td>
+                                    <td><Link to={'/posts/' + post.id}>{post.title}</Link></td>
+                                    <td>{post.author}</td>
+                                    <td>{post.commentCount}</td>
+                                    <td>{post.category}</td>
+                                    <td>{moment(post.timestamp).fromNow()}</td>
+                                    <td>
+                                        <Button color="warning">Edit</Button>{' '}<Button color="danger">Delete</Button>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </Table>
+            </div>
         );
     }
 }
@@ -147,6 +150,7 @@ function mapStateToProps(state, ownProps) {
 
     Object.keys(state.posts).forEach(post_id => {
         let post = state.posts[post_id];
+        post.id = post_id;
         posts.push(post);
     });
 

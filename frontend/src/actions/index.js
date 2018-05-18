@@ -1,11 +1,13 @@
 import {
     FETCH_ALL_POSTS,
     FETCH_POST_BY_ID,
-    FETCH_ALL_CATEGORIES
+    FETCH_ALL_CATEGORIES,
+    UPDATE_POST_VOTESCORE,
 } from './actionTypes';
 
 import ServiceFacade from '../services/ServiceFacade';
 
+/* POSTS */
 /* getAllPosts */
 export const getAllPosts = (category) => dispatch => (
     ServiceFacade.getAllPosts(category)
@@ -43,6 +45,7 @@ export function fetchPostById(post, comments) {
     }
 }
 
+/* CATEGORIES */
 export const getAllCategories = () => dispatch => (
     ServiceFacade.getAllCategories()
         .then(categories => {
@@ -56,5 +59,22 @@ export function fetchAllCategories(categories) {
     return {
         type: FETCH_ALL_CATEGORIES,
         categories,
+    }
+}
+
+/* VOTES */
+export const updatePostVoteScore = (postId, upVote) => dispatch => (
+    ServiceFacade.updatePostVoteScore(postId, upVote)
+        .then(post => {
+            dispatch(updatePostVoteScoreSync(post));
+        }).catch(err => {
+            console.warn(err);
+        })
+);
+
+export function updatePostVoteScoreSync(post) {
+    return {
+        type: UPDATE_POST_VOTESCORE,
+        post,
     }
 }

@@ -35,19 +35,37 @@ class APIService {
 
     /* POSTS */
     getAllPosts(category) {
+        return new Promise((resolve, reject) => {
+            let category_filter = "";
+            if (category) {
+                category_filter = category + "/";
+            }
+    
+            this.apiRequest(this.BASE_URL + category_filter + this.POSTS_URL, this.GET_METHOD, null)
+                .then(result => {
+                    let posts = {};
+                    
+                    if(result){
+                        //fixing data structure according denormalized data
+                        Object.keys(result).forEach(key => {
+                            let item = result[key];
 
-        let category_filter = "";
-        if (category) {
-            category_filter = category + "/";
-        }
-
-        return this.apiRequest(this.BASE_URL + category_filter + this.POSTS_URL, this.GET_METHOD, null);
+                            posts[item.id] = item;
+                            posts[item.id].id = null; //remove id from the object content
+                        });
+                    }
+                    
+                    resolve(posts);
+                })
+                .catch(err => {
+                    console.error(err);
+                    reject(err);
+                });
+        });
     }
 
     getPostById(postId) {
         return new Promise((resolve, reject) => {
-
-
             Promise.all([
                 //get post details
                 this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId, this.GET_METHOD, null),
@@ -68,6 +86,15 @@ class APIService {
         });
     }
 
+    updatePostVoteScore(postId, upVote) {
+
+        let body = {
+            option: upVote ? 'upVote' : 'downVote',
+        };
+
+        return this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId, this.POST_METHOD, body);
+    }
+
     /* COMMENTS */
     getAllComments(postId) {
         return this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId + "/" + this.COMMENTS_URL, this.GET_METHOD, null);
@@ -85,10 +112,11 @@ class APIService {
             fetch(endpoint, {
                 method,
                 headers: {
+                    'Content-Type': 'application/json',
                     'Accept': 'application/json',
                     'Authorization': token
                 },
-                body,
+                body: body ? JSON.stringify(body) : null,
             })
                 .then((response) => response.json())
                 .then((responseJson) => {
