@@ -16,6 +16,16 @@ import VoteScore from '../../components/VoteScore';
 
 class PostList extends Component {
 
+    //orderBy types
+    ORDER_BY_VOTES_ASCENDING = 'ORDER_BY_VOTES_ASCENDING';
+    ORDER_BY_VOTES_DESCENDING = 'ORDER_BY_VOTES_DESCENDING';
+    ORDER_BY_DATE_ASCENDING = 'ORDER_BY_DATE_ASCENDING';
+    ORDER_BY_DATE_DESCENDING = 'ORDER_BY_DATE_DESCENDING';
+
+    state = {
+        orderBy: null,
+    }
+
     componentWillMount() {
         this.props.dispatch(getAllPosts(this.props.category));
     }
@@ -35,21 +45,48 @@ class PostList extends Component {
         console.log("post " + postId + " upvote");
     }
 
-    onVotesSortAscending = () => {
-        console.log("sort votes ascending");
-    }
-    onVotesSortDescending = () => {
-        console.log("sort votes descending");
+    onOrderBy = (orderByCriteria) => {
+        this.setState({
+            orderBy: orderByCriteria,
+        });
     }
 
-    onDateSortAscending = () => {
-        console.log("sort date ascending");
-    }
-    onDateSortDescending = () => {
-        console.log("sort date descending");
+    orderByCriteria = (list, criteria) => {
+        console.log(list);
+        switch (criteria) {
+            case this.ORDER_BY_DATE_ASCENDING:
+                return list.sort(function (a, b) {
+                    if (a.timestamp > b.timestamp) return -1;
+                    if (a.timestamp < b.timestamp) return 1;
+                    return 0;
+                });
+            case this.ORDER_BY_DATE_DESCENDING:
+                return list.sort(function (a, b) {
+                    if (a.timestamp < b.timestamp) return -1;
+                    if (a.timestamp > b.timestamp) return 1;
+                    return 0;
+                });
+            case this.ORDER_BY_VOTES_ASCENDING:
+                return list.sort(function (a, b) {
+                    if (a.voteScore > b.voteScore) return -1;
+                    if (a.voteScore < b.voteScore) return 1;
+                    return 0;
+                });
+            case this.ORDER_BY_VOTES_DESCENDING:
+                return list.sort(function (a, b) {
+                    if (a.voteScore < b.voteScore) return -1;
+                    if (a.voteScore > b.voteScore) return 1;
+                    return 0;
+                });
+            default:
+                return list;
+        }
     }
 
     render() {
+
+        let posts = this.orderByCriteria(this.props.posts, this.state.orderBy);
+
         return (
             <Table hover>
                 <thead>
@@ -58,8 +95,8 @@ class PostList extends Component {
                         <th>
                             <SortTitle
                                 title={"Votes"}
-                                onSortAscending={this.onVotesSortAscending}
-                                onSortDescending={this.onVotesSortDescending}
+                                onSortAscending={() => this.onOrderBy(this.ORDER_BY_VOTES_ASCENDING)}
+                                onSortDescending={() => this.onOrderBy(this.ORDER_BY_VOTES_DESCENDING)}
                             />
                         </th>
                         <th>Title</th>
@@ -69,15 +106,15 @@ class PostList extends Component {
                         <th>
                             <SortTitle
                                 title={"Date"}
-                                onSortAscending={this.onDateSortAscending}
-                                onSortDescending={this.onDateSortDescending}
+                                onSortAscending={() => this.onOrderBy(this.ORDER_BY_DATE_ASCENDING)}
+                                onSortDescending={() => this.onOrderBy(this.ORDER_BY_DATE_DESCENDING)}
                             />
                         </th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {this.props.posts.map((post, index) => {
+                    {posts.map((post, index) => {
                         return (
                             <tr key={index}>
                                 <td>{index + 1}</td>
@@ -118,4 +155,3 @@ function mapStateToProps(state, ownProps) {
     }
 }
 export default withRouter(connect(mapStateToProps)(PostList));
-//onClick={() => { this.props.history.push('/posts/' + post.id) }}
