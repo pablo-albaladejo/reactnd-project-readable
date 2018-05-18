@@ -9,15 +9,18 @@ import {
 import { connect } from 'react-redux';
 
 import VoteScore from '../VoteScore';
+import {
+    updateCommentVoteScore,
+} from '../../actions/';
 
 class CommentList extends Component {
 
     onDownVote = (commentId) => {
-        console.log("comment " + commentId + " downvote");
+        this.props.dispatch(updateCommentVoteScore(commentId, false));
     }
 
     onUpVote = (commentId) => {
-        console.log("comment " + commentId + " upvote");
+        this.props.dispatch(updateCommentVoteScore(commentId, true));
     }
 
     render() {

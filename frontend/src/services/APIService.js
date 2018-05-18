@@ -40,21 +40,15 @@ class APIService {
             if (category) {
                 category_filter = category + "/";
             }
-    
+
             this.apiRequest(this.BASE_URL + category_filter + this.POSTS_URL, this.GET_METHOD, null)
                 .then(result => {
                     let posts = {};
-                    
-                    if(result){
-                        //fixing data structure according denormalized data
-                        Object.keys(result).forEach(key => {
-                            let item = result[key];
 
-                            posts[item.id] = item;
-                            posts[item.id].id = null; //remove id from the object content
-                        });
+                    if (result) {
+                        posts = this.fixResult(result);
                     }
-                    
+
                     resolve(posts);
                 })
                 .catch(err => {
@@ -71,7 +65,7 @@ class APIService {
                 this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId, this.GET_METHOD, null),
 
                 //get post comments
-                this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId + "/" + this.COMMENTS_URL, this.GET_METHOD, null),
+                this.getAllComments(postId)
             ]).then(result => {
 
                 //post details
@@ -97,10 +91,34 @@ class APIService {
 
     /* COMMENTS */
     getAllComments(postId) {
-        return this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId + "/" + this.COMMENTS_URL, this.GET_METHOD, null);
+        return new Promise((resolve, reject) => {
+
+            this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId + "/" + this.COMMENTS_URL, this.GET_METHOD, null)
+                .then(result => {
+                    let comments = {};
+
+                    if (result) {
+                        comments = this.fixResult(result);
+                    }
+
+                    resolve(comments);
+                })
+                .catch(err => {
+                    console.error(err);
+                    reject(err);
+                });
+        });
+    }
+    updateCommentVoteScore(commentId, upVote) {
+        let body = {
+            option: upVote ? 'upVote' : 'downVote',
+        };
+
+        return this.apiRequest(this.BASE_URL + this.COMMENTS_URL + "/" + commentId, this.POST_METHOD, body);
     }
 
 
+    /* HELPER */
     apiRequest(endpoint, method, body) {
         return new Promise((resolve, reject) => {
 
@@ -125,6 +143,19 @@ class APIService {
                     reject(err);
                 });
         });
+    }
+
+    fixResult(result) {
+        let items = {};
+        //fixing data structure according denormalized data
+        Object.keys(result).forEach(key => {
+            let item = result[key];
+
+            items[item.id] = item;
+            items[item.id].id = null; //remove id from the object content
+        });
+
+        return items;
     }
 }
 export default APIService;

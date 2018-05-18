@@ -3,6 +3,7 @@ import {
     FETCH_POST_BY_ID,
     FETCH_ALL_CATEGORIES,
     UPDATE_POST_VOTESCORE,
+    UPDATE_COMMENT_VOTESCORE,
 } from './actionTypes';
 
 import ServiceFacade from '../services/ServiceFacade';
@@ -63,6 +64,7 @@ export function fetchAllCategories(categories) {
 }
 
 /* VOTES */
+/* Post */
 export const updatePostVoteScore = (postId, upVote) => dispatch => (
     ServiceFacade.updatePostVoteScore(postId, upVote)
         .then(post => {
@@ -76,5 +78,22 @@ export function updatePostVoteScoreSync(post) {
     return {
         type: UPDATE_POST_VOTESCORE,
         post,
+    }
+}
+
+/* Comment */
+export const updateCommentVoteScore = (commentId, upVote) => dispatch => (
+    ServiceFacade.updateCommentVoteScore(commentId, upVote)
+        .then(comment => {
+            dispatch(updateCommentVoteScoreSync(comment));
+        }).catch(err => {
+            console.warn(err);
+        })
+);
+
+export function updateCommentVoteScoreSync(comment) {
+    return {
+        type: UPDATE_COMMENT_VOTESCORE,
+        comment,
     }
 }

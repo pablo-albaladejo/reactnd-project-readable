@@ -26,5 +26,9 @@ class ServiceFacade {
     static getAllComments(postId) {
         return APIService.getInstance().getAllComments(postId);
     }
+    static updateCommentVoteScore(commentId, upVote){
+        return APIService.getInstance().updateCommentVoteScore(commentId,upVote);
+    }
+    
 }
 export default ServiceFacade;
