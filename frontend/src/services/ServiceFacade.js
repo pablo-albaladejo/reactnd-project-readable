@@ -38,6 +38,9 @@ class ServiceFacade {
     static removeByKey(myObj, deleteKey){
         return HelperService.getInstance().removeByKey(myObj, deleteKey);
     }
+    static isDevEnv() {
+        return HelperService.getInstance().isDevEnv();
+    }
 
     
 }

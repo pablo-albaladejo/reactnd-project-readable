@@ -1,8 +1,11 @@
+import ServiceFacade from "./ServiceFacade";
 
 class APIService {
     static _instance = null;
 
-    BASE_URL = 'http://localhost:3001/';
+    BASE_URL = !ServiceFacade.isDevEnv() ? 
+    'http://localhost:3001/'
+    : 'https://us-central1-reactnd-project-readable.cloudfunctions.net/app/';
 
     //https://github.com/udacity/reactnd-project-readable-starter/tree/master/api-server#api-endpoint
     CATEGORIES_URL = 'categories';
