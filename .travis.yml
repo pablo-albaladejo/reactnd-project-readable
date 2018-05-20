@@ -5,6 +5,7 @@ branches:
    only:
       - master
 script:
+   - cd frontend
    - npm run build
 deploy:
   provider: pages
