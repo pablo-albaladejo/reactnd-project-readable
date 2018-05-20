@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import {
     getAllPosts,
     updatePostVoteScore,
+    deletePost,
 } from '../../actions/';
 
 import SortTitle from '../../components/SortTitle';
@@ -44,6 +45,14 @@ class PostList extends Component {
 
     onUpVote = (postId) => {
         this.props.dispatch(updatePostVoteScore(postId, true));
+    }
+
+    onEditPost = (postId) => {
+        
+    }
+
+    onDeletePost = (postId) => {
+        this.props.dispatch(deletePost(postId));
     }
 
     onOrderBy = (orderByCriteria) => {
@@ -134,11 +143,12 @@ class PostList extends Component {
                                     <td>{post.category}</td>
                                     <td>{moment(post.timestamp).fromNow()}</td>
                                     <td>
-                                        <Button color="warning">Edit</Button>{' '}<Button color="danger">Delete</Button>
+                                        <Button color="warning" onClick={() => this.oEditPost(post.id)}>Edit</Button>{' '}
+                                        <Button color="danger" onClick={() => this.onDeletePost(post.id)}>Delete</Button>
                                     </td>
                                 </tr>
-                            )
-                        })}
+            )
+        })}
                     </tbody>
                 </Table>
             </div>

@@ -1,4 +1,5 @@
-import { FETCH_ALL_POSTS, FETCH_POST_BY_ID, UPDATE_POST_VOTESCORE } from '../actions/actionTypes';
+import { FETCH_ALL_POSTS, FETCH_POST_BY_ID, UPDATE_POST_VOTESCORE, DELETE_POST } from '../actions/actionTypes';
+import ServiceFacade from '../services/ServiceFacade';
 
 function posts(state = {}, action) {
 
@@ -9,6 +10,8 @@ function posts(state = {}, action) {
 
         case FETCH_POST_BY_ID:
             return action.post;
+        case DELETE_POST:
+            return ServiceFacade.removeByKey(state, action.postId)
 
         case UPDATE_POST_VOTESCORE:
             return {

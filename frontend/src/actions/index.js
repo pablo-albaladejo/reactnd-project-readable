@@ -1,6 +1,7 @@
 import {
     FETCH_ALL_POSTS,
     FETCH_POST_BY_ID,
+    DELETE_POST,
     FETCH_ALL_CATEGORIES,
     UPDATE_POST_VOTESCORE,
     UPDATE_COMMENT_VOTESCORE,
@@ -46,6 +47,21 @@ export function fetchPostById(post, comments) {
     }
 }
 
+export const deletePost = (postId) => dispatch => (
+    ServiceFacade.deletePost(postId)
+        .then(posts => {
+            dispatch(deletePostSync(postId));
+        }).catch(err => {
+            console.warn(err);
+        })
+);
+
+export function deletePostSync(postId) {
+    return {
+        type: DELETE_POST,
+        postId,
+    }
+}
 /* CATEGORIES */
 export const getAllCategories = () => dispatch => (
     ServiceFacade.getAllCategories()

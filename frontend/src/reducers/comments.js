@@ -1,4 +1,4 @@
-import { FETCH_POST_BY_ID, UPDATE_COMMENT_VOTESCORE } from "../actions/actionTypes";
+import { FETCH_POST_BY_ID, UPDATE_COMMENT_VOTESCORE, DELETE_POST } from "../actions/actionTypes";
 
 function comments(state = {}, action) {
 
@@ -12,6 +12,10 @@ function comments(state = {}, action) {
                 ...state,
                 [action.comment.id]: action.comment,
             };
+
+        case DELETE_POST:
+            return {};
+
         default:
             return state;
     }

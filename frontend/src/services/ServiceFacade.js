@@ -1,4 +1,5 @@
 import APIService from './APIService';
+import HelperService from './HelperService';
 
 class ServiceFacade {
 
@@ -21,6 +22,9 @@ class ServiceFacade {
     static updatePostVoteScore(postId, upVote){
         return APIService.getInstance().updatePostVoteScore(postId,upVote);
     }
+    static deletePost(postId){
+        return APIService.getInstance().deletePost(postId);
+    }
 
     /* Comments */
     static getAllComments(postId) {
@@ -29,6 +33,12 @@ class ServiceFacade {
     static updateCommentVoteScore(commentId, upVote){
         return APIService.getInstance().updateCommentVoteScore(commentId,upVote);
     }
+
+    /* Helper */
+    static removeByKey(myObj, deleteKey){
+        return HelperService.getInstance().removeByKey(myObj, deleteKey);
+    }
+
     
 }
 export default ServiceFacade;

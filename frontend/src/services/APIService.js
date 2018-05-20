@@ -12,6 +12,7 @@ class APIService {
     GET_METHOD = 'GET';
     POST_METHOD = 'POST';
     PUT_METHOD = 'PUT';
+    DELETE_METHOD = 'DELETE';
 
     static getInstance() {
         if (this._instance == null) {
@@ -81,12 +82,14 @@ class APIService {
     }
 
     updatePostVoteScore(postId, upVote) {
-
         let body = {
             option: upVote ? 'upVote' : 'downVote',
         };
-
         return this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId, this.POST_METHOD, body);
+    }
+
+    deletePost(postId){
+        return this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId, this.DELETE_METHOD, null)
     }
 
     /* COMMENTS */
