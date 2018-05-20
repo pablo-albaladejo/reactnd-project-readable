@@ -3,7 +3,7 @@ import ServiceFacade from "./ServiceFacade";
 class APIService {
     static _instance = null;
 
-    BASE_URL = !ServiceFacade.isDevEnv() ? 
+    BASE_URL = ServiceFacade.isDevEnv() ? 
     'http://localhost:3001/'
     : 'https://us-central1-reactnd-project-readable.cloudfunctions.net/app/';
 
