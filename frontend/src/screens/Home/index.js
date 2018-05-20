@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 
 import Breadcrumbs from '../../components/Breadcrumbs';
 
 import PostListScreen from '../PostList';
 import PostScreen from '../Post';
+import NotFoundScreen from '../NotFound';
 
 class Home extends Component {
 
@@ -16,12 +17,16 @@ class Home extends Component {
         <Switch>
 
           {/* Post */}
-          <Route path='/posts/:id' component={PostScreen} />
+          <Route exact path='/posts/:id' component={PostScreen} />
 
           {/* PostList */}
-          <Route path='/:category' component={PostListScreen} />
-          <Route path='/' component={PostListScreen} />
+          <Route exact path='/:category' component={PostListScreen} />
+          <Route exact path='/' component={PostListScreen} />
       
+          {/* Error */}
+          <Route exact path='/error/notfound' component={NotFoundScreen} />
+          <Redirect from="/:other" to="/error/notfound" />
+
         </Switch>
       </div>
 

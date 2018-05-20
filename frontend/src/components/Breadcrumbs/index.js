@@ -18,6 +18,8 @@ const routes = [
   { path: '/example', breadcrumb: 'Custom Example' },
   { path: '/posts/', breadcrumb: null },
   { path: '/posts/:postId', breadcrumb: 'Post details' },
+  { path: '/error/', breadcrumb: 'Error' },
+  { path: '/error/:type', breadcrumb: null },
   { path: '/:category', breadcrumb: CategoryBreadcrumb },
 ];
 

@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react';
 
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import VoteScore from '../VoteScore'
@@ -17,6 +18,12 @@ import {
 
 class PostDetails extends Component {
 
+    componentWillMount() {
+        if (!this.props.item) {
+            this.props.history.push('/error/notfound');
+        }
+    }
+
     onDownVote = (postId) => {
         this.props.dispatch(updatePostVoteScore(postId, false));
     }
@@ -31,6 +38,7 @@ class PostDetails extends Component {
 
     onDeletePost = (postId) => {
         this.props.dispatch(deletePost(postId));
+        this.props.history.push('/');
     }
 
     render() {
@@ -54,10 +62,9 @@ class PostDetails extends Component {
                             <Button color="warning" onClick={() => this.oEditPost(post.id)}>Edit</Button>{' '}
                             <Button color="danger" onClick={() => this.onDeletePost(post.id)}>Delete</Button>
                         </CardBody>
-                    </Card>
-                )}
+                    </Card>)}
             </div>
-        );
+        )
     }
 }
-export default connect()(PostDetails);
+export default withRouter(connect()(PostDetails));
