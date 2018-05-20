@@ -6,6 +6,7 @@ branches:
       - master
 script:
    - cd frontend
+   - npm install
    - npm run build
 deploy:
   provider: pages
