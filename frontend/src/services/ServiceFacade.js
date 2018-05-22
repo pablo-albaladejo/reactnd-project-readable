@@ -33,6 +33,9 @@ class ServiceFacade {
     static updateCommentVoteScore(commentId, upVote){
         return APIService.getInstance().updateCommentVoteScore(commentId,upVote);
     }
+    static deleteComment(commentId){
+        return APIService.getInstance().deleteComment(commentId);
+    }
 
     /* Helper */
     static removeByKey(myObj, deleteKey){

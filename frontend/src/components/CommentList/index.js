@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import {
     Card, CardText, CardBody,
     CardSubtitle,
+    Button
 } from 'reactstrap';
 
 import { connect } from 'react-redux';
@@ -11,6 +12,7 @@ import { connect } from 'react-redux';
 import VoteScore from '../VoteScore';
 import {
     updateCommentVoteScore,
+    deleteComment
 } from '../../actions/';
 
 class CommentList extends Component {
@@ -21,6 +23,14 @@ class CommentList extends Component {
 
     onUpVote = (commentId) => {
         this.props.dispatch(updateCommentVoteScore(commentId, true));
+    }
+
+    oEditComment = (commentId) => {
+        
+    }
+
+    onDeleteComment = (commentId) => {
+        this.props.dispatch(deleteComment(commentId));
     }
 
     render() {
@@ -42,6 +52,8 @@ class CommentList extends Component {
                                     onUpVote={this.onUpVote}
                                 />
                             </CardBody>
+                            <Button color="warning" onClick={() => this.oEditComment(comment.id)}>Edit</Button>{' '}
+                            <Button color="danger" onClick={() => this.onDeleteComment(comment.id)}>Delete</Button>
                         </Card>
                     );
                 })}

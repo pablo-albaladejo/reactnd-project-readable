@@ -1,4 +1,5 @@
-import { FETCH_POST_BY_ID, UPDATE_COMMENT_VOTESCORE, DELETE_POST } from "../actions/actionTypes";
+import { FETCH_POST_BY_ID, UPDATE_COMMENT_VOTESCORE, DELETE_POST, DELETE_COMMENT } from "../actions/actionTypes";
+import ServiceFacade from "../services/ServiceFacade";
 
 function comments(state = {}, action) {
 
@@ -12,6 +13,8 @@ function comments(state = {}, action) {
                 ...state,
                 [action.comment.id]: action.comment,
             };
+        case DELETE_COMMENT: 
+            return ServiceFacade.removeByKey(state, action.commentId)
 
         case DELETE_POST:
             return {};

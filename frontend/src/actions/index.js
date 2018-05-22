@@ -5,6 +5,7 @@ import {
     FETCH_ALL_CATEGORIES,
     UPDATE_POST_VOTESCORE,
     UPDATE_COMMENT_VOTESCORE,
+    DELETE_COMMENT,
 } from './actionTypes';
 
 import ServiceFacade from '../services/ServiceFacade';
@@ -111,5 +112,21 @@ export function updateCommentVoteScoreSync(comment) {
     return {
         type: UPDATE_COMMENT_VOTESCORE,
         comment,
+    }
+}
+
+export const deleteComment = (commentId) => dispatch => (
+    ServiceFacade.deleteComment(commentId)
+        .then(posts => {
+            dispatch(deleteCommentSync(commentId));
+        }).catch(err => {
+            console.warn(err);
+        })
+);
+
+export function deleteCommentSync(commentId) {
+    return {
+        type: DELETE_COMMENT,
+        commentId,
     }
 }
