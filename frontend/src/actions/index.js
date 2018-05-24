@@ -2,6 +2,7 @@ import {
     FETCH_ALL_POSTS,
     FETCH_POST_BY_ID,
     DELETE_POST,
+    EDIT_POST,
     FETCH_ALL_CATEGORIES,
     UPDATE_POST_VOTESCORE,
     UPDATE_COMMENT_VOTESCORE,
@@ -48,6 +49,22 @@ export function fetchPostById(post, comments) {
     }
 }
 
+export const editPost = (postId, title, body) => dispatch => (
+    ServiceFacade.editPost(postId, title, body)
+        .then(post => {
+            dispatch(editPostSync(post));
+        }).catch(err => {
+            console.warn(err);
+        })
+);
+
+export function editPostSync(post) {
+    return {
+        type: EDIT_POST,
+        post,
+    }
+}
+
 export const deletePost = (postId) => dispatch => (
     ServiceFacade.deletePost(postId)
         .then(posts => {
@@ -63,6 +80,8 @@ export function deletePostSync(postId) {
         postId,
     }
 }
+
+
 /* CATEGORIES */
 export const getAllCategories = () => dispatch => (
     ServiceFacade.getAllCategories()

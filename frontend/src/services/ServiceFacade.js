@@ -25,6 +25,9 @@ class ServiceFacade {
     static deletePost(postId){
         return APIService.getInstance().deletePost(postId);
     }
+    static editPost(postId, title, body){
+        return APIService.getInstance().editPost(postId, title, body);
+    }
 
     /* Comments */
     static getAllComments(postId) {

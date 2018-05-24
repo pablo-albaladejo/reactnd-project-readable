@@ -18,6 +18,7 @@ class PostScreen extends Component {
             <div>
                 <PostDetails
                     item={this.props.post}
+                    editing={this.props.action === 'edit'}
                 />
                 <CommentList
                     item={this.props.comments}
@@ -30,6 +31,8 @@ function mapStateToProps(state, ownParams) {
     //post
     let post = {};
     let postId = ownParams.match.params.id;
+    let action = ownParams.match.params.action;
+
     if (state.posts) {
         post = state.posts[postId];
     }
@@ -41,10 +44,11 @@ function mapStateToProps(state, ownParams) {
         comment.id = key;
         comments.push(comment);
     });
-    
+
     return {
         post,
         comments,
+        action,
     }
 }
 export default connect(mapStateToProps)(PostScreen);

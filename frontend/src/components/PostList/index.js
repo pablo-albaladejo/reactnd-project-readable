@@ -48,7 +48,7 @@ class PostList extends Component {
     }
 
     onEditPost = (postId) => {
-        
+
     }
 
     onDeletePost = (postId) => {
@@ -147,8 +147,8 @@ class PostList extends Component {
                                         <Button color="danger" onClick={() => this.onDeletePost(post.id)}>Delete</Button>
                                     </td>
                                 </tr>
-            )
-        })}
+                            )
+                        })}
                     </tbody>
                 </Table>
             </div>

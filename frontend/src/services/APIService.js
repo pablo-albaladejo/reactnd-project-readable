@@ -1,11 +1,12 @@
 import ServiceFacade from "./ServiceFacade";
+import HelperService from "./HelperService";
 
 class APIService {
     static _instance = null;
 
-    BASE_URL = ServiceFacade.isDevEnv() ? 
-    'http://localhost:3001/'
-    : 'https://us-central1-reactnd-project-readable.cloudfunctions.net/app/';
+    BASE_URL = ServiceFacade.isDevEnv() ?
+        'http://localhost:3001/'
+        : 'https://us-central1-reactnd-project-readable.cloudfunctions.net/app/';
 
     //https://github.com/udacity/reactnd-project-readable-starter/tree/master/api-server#api-endpoint
     CATEGORIES_URL = 'categories';
@@ -91,8 +92,30 @@ class APIService {
         return this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId, this.POST_METHOD, body);
     }
 
-    deletePost(postId){
+    deletePost(postId) {
         return this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId, this.DELETE_METHOD, null)
+    }
+    editPost(postId, title, body) {
+        return new Promise((resolve, reject) => {
+            let requestBody = {
+                title: title,
+                body: body,
+            }
+            this.apiRequest(this.BASE_URL + this.POSTS_URL + "/" + postId, this.PUT_METHOD, requestBody)
+                .then(result => {
+                    let post = {};
+
+                    if (result) {
+                        post[postId] = HelperService.getInstance().removeByKey(result,'id');
+                    }
+
+                    resolve(post);
+                })
+                .catch(err => {
+                    console.error(err);
+                    reject(err);
+                });
+        });
     }
 
     /* COMMENTS */
@@ -122,7 +145,7 @@ class APIService {
 
         return this.apiRequest(this.BASE_URL + this.COMMENTS_URL + "/" + commentId, this.POST_METHOD, body);
     }
-    deleteComment(commentId){
+    deleteComment(commentId) {
         return this.apiRequest(this.BASE_URL + this.COMMENTS_URL + "/" + commentId, this.DELETE_METHOD, null)
     }
 
