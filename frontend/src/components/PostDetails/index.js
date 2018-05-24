@@ -8,21 +8,59 @@ import VoteScore from '../VoteScore'
 import {
     updatePostVoteScore,
     deletePost,
+    editPost,
 } from '../../actions/';
 
 import {
     Card, CardText, CardBody,
     CardTitle, CardSubtitle,
-    Button
+    Button,
+    FormGroup,
+    Input,
 } from 'reactstrap';
 
 class PostDetails extends Component {
 
-    componentWillMount() {
-        if (!this.props.item) {
-            this.props.history.push('/error/notfound');
+    state = {
+        post: null,
+        id: null, 
+        voteScore: null, 
+        title: null, 
+        author: null, 
+        body: null,
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.item !== prevState.post) {
+            const { id, voteScore, title, author, body} = this.props.item;
+            this.setState({
+                post: prevProps.item,
+                id, 
+                voteScore, 
+                title, 
+                author, 
+                body
+            });
         }
     }
+
+    /*     componentDidUpdate() {
+            //has error or deleted
+            if (this.props.item.error || Object.keys(this.props.item).length === 0) {
+                this.props.history.push('/error/notfound');
+            } else if (!this.state.post) { //to avoid recursive updates
+                const { id, voteScore, title, author, body } = this.props.item;
+                this.setState({
+                    post: {
+                        id,
+                        voteScore,
+                        author,
+                        title,
+                        body,
+                    },
+                })
+            }
+        } */
 
     onDownVote = (postId) => {
         this.props.dispatch(updatePostVoteScore(postId, false));
@@ -33,7 +71,7 @@ class PostDetails extends Component {
     }
 
     onEditPost = (postId) => {
-
+        this.props.history.push('/posts/' + postId + '/edit');
     }
 
     onDeletePost = (postId) => {
@@ -41,8 +79,16 @@ class PostDetails extends Component {
         this.props.history.push('/');
     }
 
+    onCancelEdit = (postId) => {
+        this.props.history.push('/posts/' + postId);
+    }
+    onSaveEdit = (postId, title, body) => {
+        this.props.dispatch(editPost(postId, title, body));
+        this.props.history.push('/posts/' + postId);
+    }
+
     render() {
-        let post = this.props.item;
+        let post = this.state.post;
         return (
             <div>
                 {post && (
@@ -58,9 +104,36 @@ class PostDetails extends Component {
                                 {post.title}
                             </CardTitle>
                             <CardSubtitle>{post.author}</CardSubtitle>
-                            <CardText>{post.body}</CardText>
-                            <Button color="warning" onClick={() => this.oEditPost(post.id)}>Edit</Button>{' '}
-                            <Button color="danger" onClick={() => this.onDeletePost(post.id)}>Delete</Button>
+
+                            <CardText>
+                                <FormGroup>
+                                    <Input
+                                        readOnly={!this.props.editing}
+                                        type="textarea"
+                                        name="postBody"
+                                        id="postBody"
+                                        value={this.state.body}
+                                        onChange={(event) => {
+                                            this.setState({
+                                                body: event.target.value,
+                                            })
+                                        }}
+                                    />
+                                </FormGroup>
+                            </CardText>
+
+                            {!this.props.editing && (
+                                <div>
+                                    <Button color="warning" onClick={() => this.onEditPost(post.id)}>Edit</Button>{' '}
+                                    <Button color="danger" onClick={() => this.onDeletePost(post.id)}>Delete</Button>
+                                </div>
+                            )}
+                            {this.props.editing && (
+                                <div>
+                                    <Button color="warning" onClick={() => this.onSaveEdit(this.state.id, this.state.title, this.state.body)}>Save</Button>{' '}
+                                    <Button color="danger" onClick={() => this.onCancelEdit(post.id)}>Cancel</Button>
+                                </div>
+                            )}
                         </CardBody>
                     </Card>)}
             </div>
