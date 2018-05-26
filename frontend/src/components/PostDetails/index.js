@@ -44,23 +44,23 @@ class PostDetails extends Component {
         }
     }
 
-    /*     componentDidUpdate() {
-            //has error or deleted
-            if (this.props.item.error || Object.keys(this.props.item).length === 0) {
-                this.props.history.push('/error/notfound');
-            } else if (!this.state.post) { //to avoid recursive updates
-                const { id, voteScore, title, author, body } = this.props.item;
-                this.setState({
-                    post: {
-                        id,
-                        voteScore,
-                        author,
-                        title,
-                        body,
-                    },
-                })
-            }
-        } */
+    componentDidUpdate() {
+        //has error or deleted
+        if (this.props.item.error || Object.keys(this.props.item).length === 0) {
+            this.props.history.push('/error/notfound');
+        } else if (!this.state.post) { //to avoid recursive updates
+            const { id, voteScore, title, author, body } = this.props.item;
+            this.setState({
+                post: {
+                    id,
+                    voteScore,
+                    author,
+                    title,
+                    body,
+                },
+            })
+        }
+    }
 
     onDownVote = (postId) => {
         this.props.dispatch(updatePostVoteScore(postId, false));
