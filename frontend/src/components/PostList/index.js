@@ -48,7 +48,7 @@ class PostList extends Component {
     }
 
     onEditPost = (postId) => {
-
+        this.props.history.push('/posts/' + postId + '/edit');
     }
 
     onDeletePost = (postId) => {
