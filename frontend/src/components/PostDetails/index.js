@@ -12,7 +12,7 @@ import {
 } from '../../actions/';
 
 import {
-    Card, CardText, CardBody,
+    Card, CardBody,
     CardTitle, CardSubtitle,
     Button,
     FormGroup,
@@ -23,22 +23,22 @@ class PostDetails extends Component {
 
     state = {
         post: null,
-        id: null, 
-        voteScore: null, 
-        title: null, 
-        author: null, 
+        id: null,
+        voteScore: null,
+        title: null,
+        author: null,
         body: null,
     }
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.item !== prevState.post) {
-            const { id, voteScore, title, author, body} = this.props.item;
+            const { id, voteScore, title, author, body } = this.props.item;
             this.setState({
                 post: prevProps.item,
-                id, 
-                voteScore, 
-                title, 
-                author, 
+                id,
+                voteScore,
+                title,
+                author,
                 body
             });
         }
@@ -105,22 +105,20 @@ class PostDetails extends Component {
                             </CardTitle>
                             <CardSubtitle>{post.author}</CardSubtitle>
 
-                            <CardText>
-                                <FormGroup>
-                                    <Input
-                                        readOnly={!this.props.editing}
-                                        type="textarea"
-                                        name="postBody"
-                                        id="postBody"
-                                        value={this.state.body}
-                                        onChange={(event) => {
-                                            this.setState({
-                                                body: event.target.value,
-                                            })
-                                        }}
-                                    />
-                                </FormGroup>
-                            </CardText>
+                            <FormGroup>
+                                <Input
+                                    readOnly={!this.props.editing}
+                                    type="textarea"
+                                    name="postBody"
+                                    id="postBody"
+                                    value={this.state.body}
+                                    onChange={(event) => {
+                                        this.setState({
+                                            body: event.target.value,
+                                        })
+                                    }}
+                                />
+                            </FormGroup>
 
                             {!this.props.editing && (
                                 <div>
