@@ -30,7 +30,7 @@ class PostDetails extends Component {
         body: null,
     }
 
-    componentDidUpdate(prevProps, prevState) {
+/*     componentDidUpdate(prevProps, prevState) {
         if (prevProps.item !== prevState.post) {
             const { id, voteScore, title, author, body } = this.props.item;
             this.setState({
@@ -42,7 +42,7 @@ class PostDetails extends Component {
                 body
             });
         }
-    }
+    } */
 
     componentDidUpdate() {
         //has error or deleted
