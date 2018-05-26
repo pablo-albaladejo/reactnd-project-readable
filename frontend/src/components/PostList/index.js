@@ -143,7 +143,7 @@ class PostList extends Component {
                                     <td>{post.category}</td>
                                     <td>{moment(post.timestamp).fromNow()}</td>
                                     <td>
-                                        <Button color="warning" onClick={() => this.oEditPost(post.id)}>Edit</Button>{' '}
+                                        <Button color="warning" onClick={() => this.onEditPost(post.id)}>Edit</Button>{' '}
                                         <Button color="danger" onClick={() => this.onDeletePost(post.id)}>Delete</Button>
                                     </td>
                                 </tr>
