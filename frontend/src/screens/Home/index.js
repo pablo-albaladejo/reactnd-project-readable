@@ -8,14 +8,17 @@ import PostListScreen from '../PostList';
 import PostScreen from '../Post';
 import NotFoundScreen from '../NotFound';
 
+import { css } from 'aphrodite';
+import styles from './styles';
+
 class Home extends Component {
 
   render() {
     return (
-      <div>
+      <div className={css(styles.container)}>
+        <h1 className={css(styles.title)}>Readable</h1>
         <Breadcrumbs />
         <Switch>
-
           {/* Post */}
           <Route exact path='/posts/:id/:action?/' component={PostScreen} />
 
