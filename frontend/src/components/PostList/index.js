@@ -16,6 +16,9 @@ import {
 import SortTitle from '../../components/SortTitle';
 import VoteScore from '../../components/VoteScore';
 
+import { css } from 'aphrodite';
+import styles from './styles';
+
 class PostList extends Component {
 
     //orderBy types
@@ -98,11 +101,11 @@ class PostList extends Component {
 
         return (
             <div>
-                <Button color="primary">New post</Button>
+                <Button className={css(styles.addButton)}><i className="fa fa-plus"/> New post</Button>
                 <Table hover>
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th><span className={css(styles.title)}>#</span></th>
                             <th>
                                 <SortTitle
                                     title={"Votes"}
@@ -110,10 +113,10 @@ class PostList extends Component {
                                     onSortDescending={() => this.onOrderBy(this.ORDER_BY_VOTES_DESCENDING)}
                                 />
                             </th>
-                            <th>Title</th>
-                            <th>User</th>
-                            <th>Comments</th>
-                            <th>Category</th>
+                            <th><span className={css(styles.title)}>Title</span></th>
+                            <th><span className={css(styles.title)}>User</span></th>
+                            <th><span className={css(styles.title)}>Comments</span></th>
+                            <th><span className={css(styles.title)}>Category</span></th>
                             <th>
                                 <SortTitle
                                     title={"Date"}
@@ -121,14 +124,14 @@ class PostList extends Component {
                                     onSortDescending={() => this.onOrderBy(this.ORDER_BY_DATE_DESCENDING)}
                                 />
                             </th>
-                            <th>Actions</th>
+                            <th><span className={css(styles.title)}>Actions</span></th>
                         </tr>
                     </thead>
                     <tbody>
                         {posts.map((post, index) => {
                             return (
                                 <tr key={index}>
-                                    <td>{index + 1}</td>
+                                    <td><span className={css(styles.rank)}>{index + 1}</span></td>
                                     <td>
                                         <VoteScore
                                             id={post.id}
@@ -137,14 +140,14 @@ class PostList extends Component {
                                             onUpVote={this.onUpVote}
                                         />
                                     </td>
-                                    <td><Link to={'/posts/' + post.id}>{post.title}</Link></td>
-                                    <td>{post.author}</td>
-                                    <td>{post.commentCount}</td>
-                                    <td>{post.category}</td>
-                                    <td>{moment(post.timestamp).fromNow()}</td>
+                                    <td><Link className={css(styles.link)} to={'/posts/' + post.id}>{post.title}</Link></td>
+                                    <td><span className={css(styles.text)}>{post.author}</span></td>
+                                    <td><span className={css(styles.text)}>{post.commentCount}</span></td>
+                                    <td><span className={css(styles.text)}>{post.category}</span></td>
+                                    <td><span className={css(styles.text)}>{moment(post.timestamp).fromNow()}</span></td>
                                     <td>
-                                        <Button color="warning" onClick={() => this.onEditPost(post.id)}>Edit</Button>{' '}
-                                        <Button color="danger" onClick={() => this.onDeletePost(post.id)}>Delete</Button>
+                                        <Button className={css(styles.editButton)} onClick={() => this.onEditPost(post.id)}><i className="fa fa-edit"/> Edit</Button>{' '}
+                                        <Button className={css(styles.deleteButton)} onClick={() => this.onDeletePost(post.id)}><i className="fa fa-trash"/> Delete</Button>
                                     </td>
                                 </tr>
                             )
