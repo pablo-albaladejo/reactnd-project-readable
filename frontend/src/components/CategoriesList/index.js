@@ -7,6 +7,10 @@ import {
     getAllCategories
 } from '../../actions/';
 
+
+import { css } from 'aphrodite';
+import styles from './styles';
+
 class CategoriesList extends Component {
 
     componentWillMount() {
@@ -15,11 +19,11 @@ class CategoriesList extends Component {
 
     render() {
         return (
-            <div>
-                categories:
-                <ul>
+            <div className={css(styles.container)}>
+                <span className={css(styles.label)}>Categories:</span>
+                <ul className={css(styles.ul)}>
                     {this.props.categories.map((category, index) => {
-                        return <li key={index}><Link to={category.path}>{category.name}</Link></li>
+                        return <li key={index} className={css(styles.li)}><Link className={css(styles.link)} to={category.path}>{category.name}</Link></li>
                     })}
                 </ul>
             </div>
