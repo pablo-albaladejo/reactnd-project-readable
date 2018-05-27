@@ -14,10 +14,16 @@ import {
 import {
     Card, CardBody,
     CardTitle, CardSubtitle,
-    Button,
     FormGroup,
     Input,
 } from 'reactstrap';
+
+import { css } from 'aphrodite';
+import styles from './styles';
+import EditButton from '../Buttons/Edit';
+import DeleteButton from '../Buttons/Delete';
+import CancelButton from '../Buttons/Cancel';
+import SaveButton from '../Buttons/Save';
 
 class PostDetails extends Component {
 
@@ -101,9 +107,9 @@ class PostDetails extends Component {
                                     onDownVote={this.onDownVote}
                                     onUpVote={this.onUpVote}
                                 />
-                                {post.title}
+                                <span className={css(styles.title)}>{post.title}</span>
                             </CardTitle>
-                            <CardSubtitle>{post.author}</CardSubtitle>
+                            <CardSubtitle> <span className={css(styles.text)}>{post.author}</span></CardSubtitle>
 
                             <FormGroup>
                                 <Input
@@ -122,14 +128,15 @@ class PostDetails extends Component {
 
                             {!this.props.editing && (
                                 <div>
-                                    <Button color="warning" onClick={() => this.onEditPost(post.id)}>Edit</Button>{' '}
-                                    <Button color="danger" onClick={() => this.onDeletePost(post.id)}>Delete</Button>
+                                    <EditButton onClick={() => this.onEditPost(post.id)}/>{' '}
+                                    <DeleteButton onClick={() => this.onDeletePost(post.id)}/>
                                 </div>
                             )}
                             {this.props.editing && (
                                 <div>
-                                    <Button color="warning" onClick={() => this.onSaveEdit(this.state.id, this.state.title, this.state.body)}>Save</Button>{' '}
-                                    <Button color="danger" onClick={() => this.onCancelEdit(post.id)}>Cancel</Button>
+                                    
+                                    <SaveButton onClick={() => this.onSaveEdit(this.state.id, this.state.title, this.state.body)} />{' '}
+                                    <CancelButton onClick={() => this.onCancelEdit(post.id)}/>
                                 </div>
                             )}
                         </CardBody>

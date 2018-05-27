@@ -4,7 +4,6 @@ import React, { Component } from 'react';
 import {
     Card, CardText, CardBody,
     CardSubtitle,
-    Button
 } from 'reactstrap';
 
 import { connect } from 'react-redux';
@@ -14,6 +13,9 @@ import {
     updateCommentVoteScore,
     deleteComment
 } from '../../actions/';
+
+import EditButton from '../Buttons/Edit';
+import DeleteButton from '../Buttons/Delete';
 
 class CommentList extends Component {
 
@@ -26,7 +28,7 @@ class CommentList extends Component {
     }
 
     oEditComment = (commentId) => {
-        
+
     }
 
     onDeleteComment = (commentId) => {
@@ -52,8 +54,10 @@ class CommentList extends Component {
                                     onUpVote={this.onUpVote}
                                 />
                             </CardBody>
-                            <Button color="warning" onClick={() => this.oEditComment(comment.id)}>Edit</Button>{' '}
-                            <Button color="danger" onClick={() => this.onDeleteComment(comment.id)}>Delete</Button>
+                            <div>
+                                <EditButton onClick={() => this.oEditComment(comment.id)} />{' '}
+                                <DeleteButton onClick={() => this.onDeleteComment(comment.id)} />
+                            </div>
                         </Card>
                     );
                 })}

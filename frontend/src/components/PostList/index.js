@@ -18,6 +18,8 @@ import VoteScore from '../../components/VoteScore';
 
 import { css } from 'aphrodite';
 import styles from './styles';
+import EditButton from '../Buttons/Edit';
+import DeleteButton from '../Buttons/Delete';
 
 class PostList extends Component {
 
@@ -100,7 +102,7 @@ class PostList extends Component {
         let posts = this.orderByCriteria(this.props.posts, this.state.orderBy);
 
         return (
-            <div>
+            <div >
                 <Button className={css(styles.addButton)}><i className="fa fa-plus"/> New post</Button>
                 <Table hover>
                     <thead>
@@ -127,7 +129,7 @@ class PostList extends Component {
                             <th><span className={css(styles.title)}>Actions</span></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className={css(styles.table)}>
                         {posts.map((post, index) => {
                             return (
                                 <tr key={index}>
@@ -146,8 +148,8 @@ class PostList extends Component {
                                     <td><span className={css(styles.text)}>{post.category}</span></td>
                                     <td><span className={css(styles.text)}>{moment(post.timestamp).fromNow()}</span></td>
                                     <td>
-                                        <Button className={css(styles.editButton)} onClick={() => this.onEditPost(post.id)}><i className="fa fa-edit"/> Edit</Button>{' '}
-                                        <Button className={css(styles.deleteButton)} onClick={() => this.onDeletePost(post.id)}><i className="fa fa-trash"/> Delete</Button>
+                                        <EditButton onClick={() => this.onEditPost(post.id)}/>{' '}
+                                        <DeleteButton onClick={() => this.onDeletePost(post.id)}/>
                                     </td>
                                 </tr>
                             )
