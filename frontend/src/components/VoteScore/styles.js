@@ -3,10 +3,10 @@ import Colors from '../../config/Colors';
 
 const styles = StyleSheet.create({
     arrow: {
-        color: Colors.font,
+        color: Colors.info,
     },
     counter: {
-        color: Colors.primary,
+        color: Colors.font,
     }
 })
 export default styles;

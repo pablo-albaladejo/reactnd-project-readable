@@ -7,7 +7,7 @@ class VoteScore extends Component {
 
     render() {
         const arrowUp = "fa fa-arrow-up " + css(styles.arrow);
-        const arrowDown = "fa fa-arrow-up " + css(styles.arrow);
+        const arrowDown = "fa fa-arrow-down " + css(styles.arrow);
         return (
             <div>
                 <i className={arrowUp} onClick={() => this.props.onUpVote(this.props.id)} />
