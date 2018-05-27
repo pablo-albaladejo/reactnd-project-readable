@@ -33,22 +33,22 @@ class PostDetails extends Component {
         voteScore: null,
         title: null,
         author: null,
-        body: null,
+        body: '',
     }
 
-/*     componentDidUpdate(prevProps, prevState) {
-        if (prevProps.item !== prevState.post) {
-            const { id, voteScore, title, author, body } = this.props.item;
-            this.setState({
-                post: prevProps.item,
-                id,
-                voteScore,
-                title,
-                author,
-                body
-            });
-        }
-    } */
+    /*     componentDidUpdate(prevProps, prevState) {
+            if (prevProps.item !== prevState.post) {
+                const { id, voteScore, title, author, body } = this.props.item;
+                this.setState({
+                    post: prevProps.item,
+                    id,
+                    voteScore,
+                    title,
+                    author,
+                    body
+                });
+            }
+        } */
 
     componentDidUpdate() {
         //has error or deleted
@@ -64,6 +64,7 @@ class PostDetails extends Component {
                     title,
                     body,
                 },
+                body
             })
         }
     }
@@ -128,15 +129,15 @@ class PostDetails extends Component {
 
                             {!this.props.editing && (
                                 <div>
-                                    <EditButton onClick={() => this.onEditPost(post.id)}/>{' '}
-                                    <DeleteButton onClick={() => this.onDeletePost(post.id)}/>
+                                    <EditButton onClick={() => this.onEditPost(post.id)} />{' '}
+                                    <DeleteButton onClick={() => this.onDeletePost(post.id)} />
                                 </div>
                             )}
                             {this.props.editing && (
                                 <div>
-                                    
+
                                     <SaveButton onClick={() => this.onSaveEdit(this.state.id, this.state.title, this.state.body)} />{' '}
-                                    <CancelButton onClick={() => this.onCancelEdit(post.id)}/>
+                                    <CancelButton onClick={() => this.onCancelEdit(post.id)} />
                                 </div>
                             )}
                         </CardBody>

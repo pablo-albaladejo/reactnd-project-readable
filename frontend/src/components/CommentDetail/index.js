@@ -17,7 +17,6 @@ import {
 import EditButton from '../Buttons/Edit';
 import DeleteButton from '../Buttons/Delete';
 
-
 import { css } from 'aphrodite';
 import styles from './styles';
 
@@ -60,6 +59,14 @@ class CommentDetail extends Component {
         return (
             <Card>
                 <CardBody>
+
+                    <VoteScore
+                        id={this.state.id}
+                        value={this.state.voteScore}
+                        onDownVote={this.onDownVote}
+                        onUpVote={this.onUpVote}
+                    />
+
                     <CardSubtitle><span className={css(styles.text)}>{this.state.author}</span></CardSubtitle>
                     
                     <FormGroup>
@@ -77,12 +84,6 @@ class CommentDetail extends Component {
                         />
                     </FormGroup>
 
-                    <VoteScore
-                        id={this.state.id}
-                        value={this.state.voteScore}
-                        onDownVote={this.onDownVote}
-                        onUpVote={this.onUpVote}
-                    />
                     <div>
                         <EditButton onClick={() => this.oEditComment(this.state.id)} />{' '}
                         <DeleteButton onClick={() => this.onDeleteComment(this.state.id)} />
