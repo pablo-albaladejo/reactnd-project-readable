@@ -1,9 +1,7 @@
-
-
 import React, { Component } from 'react';
 
 import {
-    Card, CardText, CardBody,
+    Card, CardBody,
     CardSubtitle,
     FormGroup, Input
 } from 'reactstrap';
