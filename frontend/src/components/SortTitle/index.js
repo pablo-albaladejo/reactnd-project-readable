@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
 
+import { css } from 'aphrodite';
+import styles from './styles';
+
 class SortTitle extends Component {
 
     render() {
+        const titleStyles = "d-inline " + css(styles.text);
+        const arrowStyles = "d-inline-block " + css(styles.arrow);
+        const arrowUpStyles = "fa fa-sort-up " + css(styles.arrow);
+        const arrowDownStyles = "fa fa-sort-down " + css(styles.arrow);
         return (
             <div>
-                <div className="d-inline">{this.props.title}</div>
+                <div className={titleStyles}>{this.props.title}</div>
                 <div className="d-inline">
-                    <div className="d-inline-block" style={{ marginLeft: 5 }}>
+                    <div className={arrowStyles}>
                         <div onClick={() => this.props.onSortAscending()}>
-                            <i className="fa fa-sort-up" />
+                            <i className={arrowUpStyles} />
                         </div>
                         <div onClick={() => this.props.onSortDescending()}>
-                            <i className="fa fa-sort-down" />
+                            <i className={arrowDownStyles} />
                         </div>
 
                     </div>
