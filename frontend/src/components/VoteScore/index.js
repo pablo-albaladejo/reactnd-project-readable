@@ -6,11 +6,13 @@ import styles from './styles';
 class VoteScore extends Component {
 
     render() {
+        const arrowUp = "fa fa-arrow-up " + css(styles.arrow);
+        const arrowDown = "fa fa-arrow-up " + css(styles.arrow);
         return (
             <div>
-                <i className={"fa fa-arrow-up" + " " + css(styles.arrow)} onClick={() => this.props.onUpVote(this.props.id)} />
+                <i className={arrowUp} onClick={() => this.props.onUpVote(this.props.id)} />
                 <span className={css(styles.counter)} >{this.props.value}</span>
-                <i className={"fa fa-arrow-down" + " " + css(styles.arrow)} onClick={() => this.props.onDownVote(this.props.id)} />
+                <i className={arrowDown} onClick={() => this.props.onDownVote(this.props.id)} />
             </div>
         );
     }
