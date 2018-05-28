@@ -87,7 +87,7 @@ function mapStateToProps(state, ownProps) {
     let author = '';
     let voteScore = 0;
 
-    let post = state.posts[id];
+    let post = ownProps.item;
 
     if (post) {
         title = post.title;

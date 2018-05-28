@@ -33,14 +33,14 @@ function mapStateToProps(state, ownParams) {
     let postId = ownParams.match.params.id;
     let action = ownParams.match.params.action;
 
-    if (state.posts) {
-        post = state.posts[postId];
+    if (state.posts.ids) {
+        post = state.posts.ids[postId];
     }
 
     //comments
     let comments = [];
-    Object.keys(state.comments).forEach(key => {
-        let comment = state.comments[key];
+    Object.keys(state.comments.ids).forEach(key => {
+        let comment = state.comments.ids[key];
         comment.id = key;
         comments.push(comment);
     });

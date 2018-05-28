@@ -1,4 +1,5 @@
-import { FETCH_POST_BY_ID, UPDATE_COMMENT_VOTESCORE, DELETE_POST, DELETE_COMMENT } from "../actions/actionTypes";
+import { FETCH_POST_BY_ID, UPDATE_COMMENT_VOTESCORE, DELETE_POST, DELETE_COMMENT, REQUEST_POSTS } from "../actions/actionTypes";
+import { combineReducers } from 'redux';
 import ServiceFacade from "../services/ServiceFacade";
 
 function comments(state = {}, action) {
@@ -22,5 +23,19 @@ function comments(state = {}, action) {
         default:
             return state;
     }
+
 }
-export default comments;
+const isFetching = (state = false, action) => {
+    switch (action.type) {
+        case REQUEST_POSTS:
+            return true;
+        case FETCH_POST_BY_ID:
+            return false;
+        default:
+            return state;
+    }
+}
+export default combineReducers({
+    ids: comments,
+    isFetching
+});

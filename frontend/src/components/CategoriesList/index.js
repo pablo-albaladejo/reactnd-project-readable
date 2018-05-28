@@ -33,10 +33,13 @@ class CategoriesList extends Component {
 
 function mapStateToProps(state, ownProps) {
     let categories = [];
-    Object.keys(state.categories).forEach(category_id => {
-        let category = state.categories[category_id];
-        categories.push(category);
-    });
+
+    if (!state.categories.isFetching) {
+        Object.keys(state.categories.ids).forEach(category_id => {
+            let category = state.categories.ids[category_id];
+            categories.push(category);
+        });
+    }
 
     return {
         categories,

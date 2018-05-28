@@ -102,8 +102,8 @@ class PostList extends Component {
         let posts = this.orderByCriteria(this.props.posts, this.state.orderBy);
 
         return (
-            <div >
-                <Button className={css(styles.addButton)}><i className="fa fa-plus"/> New post</Button>
+            <div>
+                <Button className={css(styles.addButton)}><i className="fa fa-plus" /> New post</Button>
                 <Table hover>
                     <thead>
                         <tr>
@@ -148,8 +148,8 @@ class PostList extends Component {
                                     <td><span className={css(styles.text)}>{post.category}</span></td>
                                     <td><span className={css(styles.text)}>{moment(post.timestamp).fromNow()}</span></td>
                                     <td>
-                                        <EditButton onClick={() => this.onEditPost(post.id)}/>{' '}
-                                        <DeleteButton onClick={() => this.onDeletePost(post.id)}/>
+                                        <EditButton onClick={() => this.onEditPost(post.id)} />{' '}
+                                        <DeleteButton onClick={() => this.onDeletePost(post.id)} />
                                     </td>
                                 </tr>
                             )
@@ -163,11 +163,13 @@ class PostList extends Component {
 function mapStateToProps(state, ownProps) {
     let posts = [];
 
-    Object.keys(state.posts).forEach(post_id => {
-        let post = state.posts[post_id];
-        post.id = post_id;
-        posts.push(post);
-    });
+    if (!state.posts.isFetching) {
+        Object.keys(state.posts.ids).forEach(post_id => {
+            let post = state.posts.ids[post_id];
+            post.id = post_id;
+            posts.push(post);
+        });
+    }
 
     return {
         posts,

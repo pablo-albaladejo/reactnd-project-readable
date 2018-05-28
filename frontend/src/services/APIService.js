@@ -106,7 +106,7 @@ class APIService {
                     let post = {};
 
                     if (result) {
-                        post[postId] = HelperService.getInstance().removeByKey(result,'id');
+                        post[postId] = HelperService.getInstance().removeByKey(result, 'id');
                     }
 
                     resolve(post);
@@ -184,7 +184,7 @@ class APIService {
             let item = result[key];
 
             items[item.id] = item;
-            items[item.id].id = null; //remove id from the object content
+            delete items[item.id].id;
         });
 
         return items;

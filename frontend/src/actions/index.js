@@ -7,20 +7,24 @@ import {
     UPDATE_POST_VOTESCORE,
     UPDATE_COMMENT_VOTESCORE,
     DELETE_COMMENT,
+
+    REQUEST_POSTS,
+    REQUEST_CATEGORIES
 } from './actionTypes';
 
 import ServiceFacade from '../services/ServiceFacade';
 
 /* POSTS */
 /* getAllPosts */
-export const getAllPosts = (category) => dispatch => (
+export const getAllPosts = (category) => dispatch => { 
+    dispatch(requestPosts());
     ServiceFacade.getAllPosts(category)
         .then(posts => {
             dispatch(fetchAllPosts(posts));
         }).catch(err => {
             console.warn(err);
         })
-);
+    };
 
 export function fetchAllPosts(posts) {
     return {
@@ -30,7 +34,8 @@ export function fetchAllPosts(posts) {
 }
 
 /* getPostById */
-export const getPostById = (postId) => dispatch => (
+export const getPostById = (postId) => dispatch => {
+    dispatch(requestPosts());
     ServiceFacade.getPostById(postId)
         .then(result => {
             let post = result[0];
@@ -39,7 +44,13 @@ export const getPostById = (postId) => dispatch => (
         }).catch(err => {
             console.warn(err);
         })
-);
+};
+
+export function requestPosts() {
+    return {
+        type: REQUEST_POSTS,
+    }
+}
 
 export function fetchPostById(post, comments) {
     return {
@@ -83,14 +94,21 @@ export function deletePostSync(postId) {
 
 
 /* CATEGORIES */
-export const getAllCategories = () => dispatch => (
+export const getAllCategories = () => dispatch => {
+    dispatch(requestCategories());
     ServiceFacade.getAllCategories()
         .then(categories => {
             dispatch(fetchAllCategories(categories));
         }).catch(err => {
             console.warn(err);
         })
-);
+    };
+
+export function requestCategories() {
+    return {
+        type: REQUEST_CATEGORIES,
+    }
+}
 
 export function fetchAllCategories(categories) {
     return {
