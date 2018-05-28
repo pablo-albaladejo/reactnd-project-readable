@@ -39,11 +39,13 @@ function mapStateToProps(state, ownParams) {
 
     //comments
     let comments = [];
-    Object.keys(state.comments.ids).forEach(key => {
-        let comment = state.comments.ids[key];
-        comment.id = key;
-        comments.push(comment);
-    });
+    if (!state.posts.isFetching) {
+        Object.keys(state.comments.ids).forEach(key => {
+            let comment = state.comments.ids[key];
+            comment.id = key;
+            comments.push(comment);
+        });
+    }
 
     return {
         post,
