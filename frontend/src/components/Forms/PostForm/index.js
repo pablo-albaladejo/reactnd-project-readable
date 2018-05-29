@@ -8,10 +8,10 @@ import { Field, reduxForm, reset } from 'redux-form'
 import InputText from '../InputText'
 
 import { connect } from 'react-redux';
-import EditButton from '../Buttons/Edit';
-import DeleteButton from '../Buttons/Delete';
-import SaveButton from '../Buttons/Save';
-import CancelButton from '../Buttons/Cancel';
+import EditButton from '../../Buttons/Edit';
+import DeleteButton from '../../Buttons/Delete';
+import SaveButton from '../../Buttons/Save';
+import CancelButton from '../../Buttons/Cancel';
 
 const validateNotEmpty = value => !value ? 'Must enter a value' : null
 

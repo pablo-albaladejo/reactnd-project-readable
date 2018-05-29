@@ -19,7 +19,7 @@ import {
 import { css } from 'aphrodite';
 import styles from './styles';
 
-import PostForm from '../PostForm';
+import PostForm from '../Forms/PostForm';
 
 class PostDetails extends Component {
 
