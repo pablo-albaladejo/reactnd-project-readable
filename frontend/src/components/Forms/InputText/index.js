@@ -4,14 +4,17 @@ import {
   Input,
 } from 'reactstrap';
 
+import { css } from 'aphrodite';
+import styles from './styles';
+
 class InputText extends Component {
 
   render() {
-    const { input, editable, meta: { touched, error } } = this.props;
+    const { input, type, editable, placeholder, meta: { touched, error } } = this.props;
     return (
       <div>
-        <Input {...input} type="textarea" readOnly={!editable}/>
-        {touched && error && <span className="error">{error}</span>}
+        <Input {...input} type={type} placeholder={placeholder} readOnly={!editable}/>
+        {touched && error && <span className={css(styles.text)}>{error}</span>}
       </div>
     );
   }

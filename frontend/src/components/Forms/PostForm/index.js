@@ -3,11 +3,11 @@
 
 import React, { Component } from 'react'
 
+import { connect } from 'react-redux';
 import { Field, reduxForm, reset } from 'redux-form'
 
 import InputText from '../InputText'
 
-import { connect } from 'react-redux';
 import EditButton from '../../Buttons/Edit';
 import DeleteButton from '../../Buttons/Delete';
 import SaveButton from '../../Buttons/Save';
@@ -21,7 +21,9 @@ class PostForm extends Component {
     return (
       <form>
 
-        <Field name="body" editable={this.props.editable} component={InputText} validate={validateNotEmpty} />
+        <Field type="text" name="title"  placeholder="Title" editable={this.props.editable} component={InputText} validate={validateNotEmpty} />
+        <Field type="text" name="author" placeholder="Author" editable={false} component={InputText} validate={validateNotEmpty} />
+        <Field type="textarea" name="body" placeholder="Message" editable={this.props.editable} component={InputText} validate={validateNotEmpty} />
         {!this.props.editable && (
           <div>
             <EditButton onClick={() => this.props.onEdit()} />{' '}
@@ -49,6 +51,8 @@ let Form = reduxForm(config)(PostForm);
 function mapStateToProps(state, ownProps) {
   return {
     initialValues: {
+      title: ownProps.title,
+      author: ownProps.author,
       body: ownProps.value,
     },
 

@@ -19,6 +19,8 @@ import {
 import { css } from 'aphrodite';
 import styles from './styles';
 
+import moment from 'moment';
+
 import PostForm from '../Forms/PostForm';
 
 class PostDetails extends Component {
@@ -60,12 +62,12 @@ class PostDetails extends Component {
                                 onDownVote={this.onDownVote}
                                 onUpVote={this.onUpVote}
                             />
-                            <span className={css(styles.title)}>{this.props.title}</span>
+                            <span className={css(styles.date)}>{moment(this.props.timestamp).format("DD/MM/YY HH:MM:ss")}</span>
                         </CardTitle>
-                        <CardSubtitle> <span className={css(styles.text)}>{this.props.author}</span></CardSubtitle>
-
                         <PostForm
                             editable={this.props.editing}
+                            title={this.props.title}
+                            author={this.props.author}
                             value={this.props.body}
                             onEdit={() => this.onEditPost(this.props.id)}
                             onCancel={() => this.onCancelEdit(this.props.id)}
@@ -86,6 +88,7 @@ function mapStateToProps(state, ownProps) {
     let body = '';
     let author = '';
     let voteScore = 0;
+    let timestamp = 0;
 
     let post = ownProps.item;
 
@@ -94,6 +97,7 @@ function mapStateToProps(state, ownProps) {
         body = post.body;
         author = post.author;
         voteScore = post.voteScore;
+        timestamp = post.timestamp;
     }
 
     return {
@@ -103,6 +107,7 @@ function mapStateToProps(state, ownProps) {
         body,
         author,
         voteScore,
+        timestamp,
     }
 }
 export default withRouter(connect(mapStateToProps)(PostDetails));
