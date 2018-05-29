@@ -1,4 +1,5 @@
 class HelperService {
+    
     static _instance = null;
 
     static getInstance() {
@@ -16,11 +17,6 @@ class HelperService {
                 result[current] = myObj[current];
                 return result;
             }, {});
-    }
-
-    isDevEnv() {
-        //https://stackoverflow.com/a/35470995/3395884
-        return !process.env.NODE_ENV || process.env.NODE_ENV === 'development';
     }
 
     //https://firebase.googleblog.com/2015/02/the-2120-ways-to-ensure-unique_68.html

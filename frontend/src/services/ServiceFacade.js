@@ -1,62 +1,56 @@
-import APIService from './APIService';
 import HelperService from './HelperService';
+import PostService from './PostService';
+import CategoryService from './CategoryService';
+import CommentService from './CommentService';
 
 class ServiceFacade {
 
-    /* 
-        API 
-    */
-
     /* Categories */
     static getAllCategories() {
-        return APIService.getInstance().getAllCategories();
+        return CategoryService.getInstance().getAllCategories();
     }
 
     /* Posts */
     static getAllPosts(category) {
-        return APIService.getInstance().getAllPosts(category);
+        return PostService.getInstance().getAllPosts(category);
     }
     static getPostById(postId){
-        return APIService.getInstance().getPostById(postId);
+        return PostService.getInstance().getPostById(postId);
     }
     static updatePostVoteScore(postId, upVote){
-        return APIService.getInstance().updatePostVoteScore(postId,upVote);
+        return PostService.getInstance().updatePostVoteScore(postId,upVote);
     }
     static deletePost(postId){
-        return APIService.getInstance().deletePost(postId);
+        return PostService.getInstance().deletePost(postId);
     }
     static editPost(postId, title, body){
-        return APIService.getInstance().editPost(postId, title, body);
+        return PostService.getInstance().editPost(postId, title, body);
     }
     static addPost(post){
-        return APIService.getInstance().addPost(post);
+        return PostService.getInstance().addPost(post);
     }
 
     /* Comments */
     static getAllComments(postId) {
-        return APIService.getInstance().getAllComments(postId);
+        return CommentService.getInstance().getAllComments(postId);
     }
     static updateCommentVoteScore(commentId, upVote){
-        return APIService.getInstance().updateCommentVoteScore(commentId,upVote);
+        return CommentService.getInstance().updateCommentVoteScore(commentId,upVote);
     }
     static updateComment(commentId, data){
-        return APIService.getInstance().updateComment(commentId, data);
+        return CommentService.getInstance().updateComment(commentId, data);
     }
     static deleteComment(commentId){
-        return APIService.getInstance().deleteComment(commentId);
+        return CommentService.getInstance().deleteComment(commentId);
     }
     static addComment(postId, data){
-        return APIService.getInstance().addComment(postId, data);
+        return CommentService.getInstance().addComment(postId, data);
     }
 
     /* Helper */
     static removeByKey(myObj, deleteKey){
         return HelperService.getInstance().removeByKey(myObj, deleteKey);
     }
-    static isDevEnv() {
-        return HelperService.getInstance().isDevEnv();
-    }
-
     
 }
 export default ServiceFacade;
