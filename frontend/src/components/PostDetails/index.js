@@ -10,7 +10,7 @@ import {
     deletePost,
     editPost,
     addPost,
-} from '../../actions/';
+} from '../../actions/posts';
 
 import {
     Card, CardBody,

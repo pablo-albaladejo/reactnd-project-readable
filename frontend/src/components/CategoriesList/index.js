@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import {
     getAllCategories
-} from '../../actions/';
+} from '../../actions/categories';
 
 
 import { css } from 'aphrodite';

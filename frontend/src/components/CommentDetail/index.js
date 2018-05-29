@@ -14,7 +14,7 @@ import {
     deleteComment,
     updateComment,
     addComment,
-} from '../../actions';
+} from '../../actions/comments';
 
 import { css } from 'aphrodite';
 import styles from './styles';

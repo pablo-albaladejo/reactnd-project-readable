@@ -11,7 +11,7 @@ import {
     getAllPosts,
     updatePostVoteScore,
     deletePost,
-} from '../../actions/';
+} from '../../actions/posts';
 
 import SortTitle from '../../components/SortTitle';
 import VoteScore from '../../components/VoteScore';

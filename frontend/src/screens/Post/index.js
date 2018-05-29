@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { getPostById, getAllCategories } from '../../actions/';
+
+import { getPostById } from '../../actions/posts';
+import { getAllCategories } from '../../actions/categories';
 
 import PostDetails from '../../components/PostDetails';
 import CommentList from '../../components/CommentList';

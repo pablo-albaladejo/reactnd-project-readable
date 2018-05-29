@@ -3,22 +3,14 @@ import {
     FETCH_POST_BY_ID,
     DELETE_POST,
     EDIT_POST,
-    FETCH_ALL_CATEGORIES,
     UPDATE_POST_VOTESCORE,
-    UPDATE_COMMENT_VOTESCORE,
-    DELETE_COMMENT,
-    UPDATE_COMMENT,
-    ADD_COMMENT,
-    
     REQUEST_POSTS,
-    REQUEST_CATEGORIES,
     ADD_POST
 } from './actionTypes';
 
 import ServiceFacade from '../services/ServiceFacade';
 
-/* POSTS */
-/* getAllPosts */
+//get all posts
 export const getAllPosts = (category) => dispatch => {
     dispatch(requestPosts());
     ServiceFacade.getAllPosts(category)
@@ -28,7 +20,6 @@ export const getAllPosts = (category) => dispatch => {
             console.warn(err);
         })
 };
-
 export function fetchAllPosts(posts) {
     return {
         type: FETCH_ALL_POSTS,
@@ -36,7 +27,7 @@ export function fetchAllPosts(posts) {
     }
 }
 
-/* getPostById */
+//get post by id
 export const getPostById = (postId) => dispatch => {
     dispatch(requestPosts());
     ServiceFacade.getPostById(postId)
@@ -48,13 +39,13 @@ export const getPostById = (postId) => dispatch => {
             console.warn(err);
         })
 };
-
 export function requestPosts() {
     return {
         type: REQUEST_POSTS,
     }
 }
 
+//fetch post
 export function fetchPostById(post, comments) {
     return {
         type: FETCH_POST_BY_ID,
@@ -63,6 +54,7 @@ export function fetchPostById(post, comments) {
     }
 }
 
+//edit post
 export const editPost = (postId, title, body) => dispatch => (
     ServiceFacade.editPost(postId, title, body)
         .then(post => {
@@ -71,7 +63,6 @@ export const editPost = (postId, title, body) => dispatch => (
             console.warn(err);
         })
 );
-
 export function editPostSync(post) {
     return {
         type: EDIT_POST,
@@ -79,6 +70,7 @@ export function editPostSync(post) {
     }
 }
 
+//delete post
 export const deletePost = (postId) => dispatch => (
     ServiceFacade.deletePost(postId)
         .then(posts => {
@@ -87,7 +79,6 @@ export const deletePost = (postId) => dispatch => (
             console.warn(err);
         })
 );
-
 export function deletePostSync(postId) {
     return {
         type: DELETE_POST,
@@ -95,6 +86,7 @@ export function deletePostSync(postId) {
     }
 }
 
+//add post
 export const addPost = (data) => dispatch => (
     ServiceFacade.addPost(data)
         .then(post => {
@@ -103,7 +95,6 @@ export const addPost = (data) => dispatch => (
             console.warn(err);
         })
 );
-
 export function addPostSync(post) {
     return {
         type: ADD_POST,
@@ -111,33 +102,7 @@ export function addPostSync(post) {
     }
 }
 
-
-/* CATEGORIES */
-export const getAllCategories = () => dispatch => {
-    dispatch(requestCategories());
-    ServiceFacade.getAllCategories()
-        .then(categories => {
-            dispatch(fetchAllCategories(categories));
-        }).catch(err => {
-            console.warn(err);
-        })
-};
-
-export function requestCategories() {
-    return {
-        type: REQUEST_CATEGORIES,
-    }
-}
-
-export function fetchAllCategories(categories) {
-    return {
-        type: FETCH_ALL_CATEGORIES,
-        categories,
-    }
-}
-
-/* VOTES */
-/* Post */
+//update voteScore
 export const updatePostVoteScore = (postId, upVote) => dispatch => (
     ServiceFacade.updatePostVoteScore(postId, upVote)
         .then(post => {
@@ -146,75 +111,9 @@ export const updatePostVoteScore = (postId, upVote) => dispatch => (
             console.warn(err);
         })
 );
-
 export function updatePostVoteScoreSync(post) {
     return {
         type: UPDATE_POST_VOTESCORE,
         post,
-    }
-}
-
-/* Comment */
-export const updateCommentVoteScore = (commentId, upVote) => dispatch => (
-    ServiceFacade.updateCommentVoteScore(commentId, upVote)
-        .then(comment => {
-            dispatch(updateCommentVoteScoreSync(comment));
-        }).catch(err => {
-            console.warn(err);
-        })
-);
-
-export function updateCommentVoteScoreSync(comment) {
-    return {
-        type: UPDATE_COMMENT_VOTESCORE,
-        comment,
-    }
-}
-
-export const deleteComment = (commentId) => dispatch => (
-    ServiceFacade.deleteComment(commentId)
-        .then(comment => {
-            dispatch(deleteCommentSync(comment));
-        }).catch(err => {
-            console.warn(err);
-        })
-);
-
-export function deleteCommentSync(comment) {
-    return {
-        type: DELETE_COMMENT,
-        comment,
-    }
-}
-
-export const updateComment = (commentId, data) => dispatch => (
-    ServiceFacade.updateComment(commentId, data)
-        .then(comment => {
-            dispatch(updateCommentSync(comment));
-        }).catch(err => {
-            console.warn(err);
-        })
-);
-
-export function updateCommentSync(comment) {
-    return {
-        type: UPDATE_COMMENT,
-        comment,
-    }
-}
-
-export const addComment = (postId, data) => dispatch => (
-    ServiceFacade.addComment(postId, data)
-        .then(comment => {
-            dispatch(addCommentSync(comment));
-        }).catch(err => {
-            console.warn(err);
-        })
-);
-
-export function addCommentSync(comment) {
-    return {
-        type: ADD_COMMENT,
-        comment,
     }
 }
