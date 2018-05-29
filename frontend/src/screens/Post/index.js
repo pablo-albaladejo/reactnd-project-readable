@@ -9,8 +9,7 @@ import CommentList from '../../components/CommentList';
 class PostScreen extends Component {
 
     componentWillMount() {
-        let postId = this.props.match.params.id;
-        this.props.dispatch(getPostById(postId));
+        if (!this.props.isNew) this.props.dispatch(getPostById(this.props.postId));
         this.props.dispatch(getAllCategories());
     }
 
@@ -21,11 +20,14 @@ class PostScreen extends Component {
                     post={this.props.post}
                     categories={this.props.categories}
                     editing={this.props.action === 'edit'}
+                    isNew={this.props.isNew}
                 />
-                <CommentList
-                    postId={this.props.postId}
-                    item={this.props.comments}
-                />
+                {!this.props.isNew && (
+                    <CommentList
+                        postId={this.props.postId}
+                        item={this.props.comments}
+                    />
+                )}
             </div>
         );
     }
@@ -33,8 +35,11 @@ class PostScreen extends Component {
 function mapStateToProps(state, ownParams) {
     //post
     let post = {};
+
     let postId = ownParams.match.params.id;
     let action = ownParams.match.params.action;
+
+    let isNew = postId === 'new';
 
     if (state.posts.ids) {
         post = state.posts.ids[postId];
@@ -62,6 +67,7 @@ function mapStateToProps(state, ownParams) {
     return {
         post,
         postId,
+        isNew,
         comments,
         categories,
         action,

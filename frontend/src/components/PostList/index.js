@@ -68,6 +68,10 @@ class PostList extends Component {
         });
     }
 
+    onAddPost = () => {
+        this.props.history.push('/posts/new');
+    }
+
     orderByCriteria = (list, criteria) => {
         switch (criteria) {
             case this.ORDER_BY_DATE_ASCENDING:
@@ -105,7 +109,7 @@ class PostList extends Component {
 
         return (
             <div>
-                <NewButton />
+                <div className={css(styles.addButton)}><NewButton onClick={() => this.onAddPost()}/></div>
                 <Table hover>
                     <thead>
                         <tr>

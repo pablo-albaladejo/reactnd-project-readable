@@ -9,6 +9,7 @@ import {
     updatePostVoteScore,
     deletePost,
     editPost,
+    addPost,
 } from '../../actions/';
 
 import {
@@ -49,6 +50,17 @@ class PostDetails extends Component {
         this.props.dispatch(editPost(postId, data.title, data.body));
         this.props.history.push('/posts/' + postId);
     }
+    onAddPost = (data) => {
+        let post = {
+            title: data.title,
+            body: data.body,
+            author: data.author,
+            category: this.props.categories[data.category].path,
+        }
+
+        this.props.dispatch(addPost(post));
+        this.props.history.push('/');
+    }
 
     render() {
         return (
@@ -56,16 +68,24 @@ class PostDetails extends Component {
                 <Card>
                     <CardBody>
                         <CardTitle>
-                            <VoteScore
-                                id={this.props.id}
-                                value={this.props.voteScore}
-                                onDownVote={this.onDownVote}
-                                onUpVote={this.onUpVote}
-                            />
-                            <span className={css(styles.date)}>{"Last edit: " + moment(this.props.timestamp).format("LLL")}</span>
+
+                            {!this.props.isNew && (
+                                <VoteScore
+                                    id={this.props.id}
+                                    value={this.props.voteScore}
+                                    onDownVote={this.onDownVote}
+                                    onUpVote={this.onUpVote}
+                                />
+                            )}
+
+                            {!this.props.isNew && (
+                                <span className={css(styles.date)}>{"Last edit: " + moment(this.props.timestamp).format("LLL")}</span>
+                            )}
+
                         </CardTitle>
                         <PostForm
                             editable={this.props.editing}
+                            isNew={this.props.isNew}
                             title={this.props.title}
                             author={this.props.author}
                             value={this.props.body}
@@ -75,6 +95,7 @@ class PostDetails extends Component {
                             onCancel={() => this.onCancelEdit(this.props.id)}
                             onSave={(data) => this.onSavePost(this.props.id, data)}
                             onDelete={() => this.onDeletePost(this.props.id)}
+                            onAdd={(data) => this.onAddPost(data)}
                         />
 
                     </CardBody>
@@ -106,9 +127,9 @@ function mapStateToProps(state, ownProps) {
 
     if (categories && post) {
         var found = categories.find(category => {
-            return category.path === post.category 
+            return category.path === post.category
         });
-        if(found) category =  found.id;
+        if (found) category = found.id;
     }
 
     return {

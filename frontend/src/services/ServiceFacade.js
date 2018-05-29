@@ -28,6 +28,9 @@ class ServiceFacade {
     static editPost(postId, title, body){
         return APIService.getInstance().editPost(postId, title, body);
     }
+    static addPost(post){
+        return APIService.getInstance().addPost(post);
+    }
 
     /* Comments */
     static getAllComments(postId) {

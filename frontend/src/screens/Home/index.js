@@ -31,6 +31,9 @@ class Home extends Component {
             {/* Post */}
             <Route exact path='/posts/:id/:action?/' component={PostScreen} />
 
+            {/* New post */}
+            <Route exact path='/posts/new' component={PostScreen} />
+
             {/* PostList */}
             <Route exact path='/:category' component={PostListScreen} />
             <Route exact path='/' component={PostListScreen} />

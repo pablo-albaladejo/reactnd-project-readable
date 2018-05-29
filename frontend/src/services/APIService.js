@@ -118,6 +118,19 @@ class APIService {
         });
     }
 
+    addPost(post) {
+        let body = {
+            id: HelperService.getInstance().generateID(),
+            timestamp: Date.now(),
+            title: post.title,
+            body: post.body,
+            author: post.author,
+            category: post.category,
+        };
+        console.log(body);
+        return this.apiRequest(this.BASE_URL + this.POSTS_URL, this.POST_METHOD, body)
+    }
+
     /* COMMENTS */
     getAllComments(postId) {
         return new Promise((resolve, reject) => {

@@ -11,7 +11,8 @@ import {
     ADD_COMMENT,
     
     REQUEST_POSTS,
-    REQUEST_CATEGORIES
+    REQUEST_CATEGORIES,
+    ADD_POST
 } from './actionTypes';
 
 import ServiceFacade from '../services/ServiceFacade';
@@ -91,6 +92,22 @@ export function deletePostSync(postId) {
     return {
         type: DELETE_POST,
         postId,
+    }
+}
+
+export const addPost = (data) => dispatch => (
+    ServiceFacade.addPost(data)
+        .then(post => {
+            dispatch(addPostSync(post));
+        }).catch(err => {
+            console.warn(err);
+        })
+);
+
+export function addPostSync(post) {
+    return {
+        type: ADD_POST,
+        post,
     }
 }
 
