@@ -46,6 +46,7 @@ class CommentDetail extends Component {
 
     render() {
         const { id, voteScore, author, body } = this.props.comment;
+        let key = this.props.index;
         return (
             <Card>
                 <CardBody>
@@ -60,8 +61,8 @@ class CommentDetail extends Component {
                     <CardSubtitle><span className={css(styles.text)}>{author}</span></CardSubtitle>
 
                     <CommentForm
-                        form={id} //https://github.com/erikras/redux-form/issues/28
-                        
+                        form={'commentForm_' + key} //https://github.com/erikras/redux-form/issues/28
+
                         value={body}
                         onSave={(data) => this.onSaveComment(id, data)}
                         onDelete={() => this.onDeleteComment(id)}

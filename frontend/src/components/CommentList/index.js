@@ -15,7 +15,7 @@ class CommentList extends Component {
                 <span className={css(styles.text)}>Comments</span>
                 {comments.map((item, index) => {
                     return (
-                        <CommentDetail  key={index} comment={item}/>
+                        <CommentDetail  key={index} index={index} comment={item}/>
                     );
                 })}
             </div>

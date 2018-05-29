@@ -15,8 +15,8 @@ function comments(state = {}, action) {
                 [action.comment.id]: action.comment,
             };
         case DELETE_COMMENT:
-            return ServiceFacade.removeByKey(state, action.commentId);
-            
+            return ServiceFacade.removeByKey(state, action.comment.id);
+
         case UPDATE_COMMENT:
             return {
                 ...state,

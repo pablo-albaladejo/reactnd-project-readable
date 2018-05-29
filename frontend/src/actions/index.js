@@ -155,17 +155,17 @@ export function updateCommentVoteScoreSync(comment) {
 
 export const deleteComment = (commentId) => dispatch => (
     ServiceFacade.deleteComment(commentId)
-        .then(posts => {
-            dispatch(deleteCommentSync(commentId));
+        .then(comment => {
+            dispatch(deleteCommentSync(comment));
         }).catch(err => {
             console.warn(err);
         })
 );
 
-export function deleteCommentSync(commentId) {
+export function deleteCommentSync(comment) {
     return {
         type: DELETE_COMMENT,
-        commentId,
+        comment,
     }
 }
 
