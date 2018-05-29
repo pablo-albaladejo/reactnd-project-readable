@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
-import { getPostById } from '../../actions/';
+import { getPostById, getAllCategories } from '../../actions/';
 
 import PostDetails from '../../components/PostDetails';
 import CommentList from '../../components/CommentList';
@@ -11,13 +11,15 @@ class PostScreen extends Component {
     componentWillMount() {
         let postId = this.props.match.params.id;
         this.props.dispatch(getPostById(postId));
+        this.props.dispatch(getAllCategories());
     }
 
     render() {
         return (
             <div>
                 <PostDetails
-                    item={this.props.post}
+                    post={this.props.post}
+                    categories={this.props.categories}
                     editing={this.props.action === 'edit'}
                 />
                 <CommentList
@@ -47,9 +49,19 @@ function mapStateToProps(state, ownParams) {
         });
     }
 
+    let categories = [];
+    if (!state.categories.isFetching) {
+        Object.keys(state.categories.ids).forEach(key => {
+            let category = state.categories.ids[key];
+            category.id = key;
+            categories.push(category);
+        });
+    }
+
     return {
         post,
         comments,
+        categories,
         action,
     }
 }

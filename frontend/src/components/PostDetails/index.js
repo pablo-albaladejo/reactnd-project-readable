@@ -13,7 +13,7 @@ import {
 
 import {
     Card, CardBody,
-    CardTitle, CardSubtitle,
+    CardTitle,
 } from 'reactstrap';
 
 import { css } from 'aphrodite';
@@ -69,6 +69,8 @@ class PostDetails extends Component {
                             title={this.props.title}
                             author={this.props.author}
                             value={this.props.body}
+                            category={this.props.category}
+                            categories={this.props.categories}
                             onEdit={() => this.onEditPost(this.props.id)}
                             onCancel={() => this.onCancelEdit(this.props.id)}
                             onSave={(data) => this.onSavePost(this.props.id, data)}
@@ -89,8 +91,10 @@ function mapStateToProps(state, ownProps) {
     let author = '';
     let voteScore = 0;
     let timestamp = 0;
+    let category = -1;
 
-    let post = ownProps.item;
+    let post = ownProps.post;
+    let categories = ownProps.categories;
 
     if (post) {
         title = post.title;
@@ -98,6 +102,13 @@ function mapStateToProps(state, ownProps) {
         author = post.author;
         voteScore = post.voteScore;
         timestamp = post.timestamp;
+    }
+
+    if (categories && post) {
+        var found = categories.find(category => {
+            return category.path === post.category 
+        });
+        if(found) category =  found.id;
     }
 
     return {
@@ -108,6 +119,8 @@ function mapStateToProps(state, ownProps) {
         author,
         voteScore,
         timestamp,
+        category,
+        categories,
     }
 }
 export default withRouter(connect(mapStateToProps)(PostDetails));

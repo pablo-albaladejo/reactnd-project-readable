@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm, reset } from 'redux-form'
 
 import InputText from '../InputText'
+import Selector from '../Selector'
 
 import EditButton from '../../Buttons/Edit';
 import DeleteButton from '../../Buttons/Delete';
@@ -22,6 +23,7 @@ class PostForm extends Component {
       <form>
 
         <Field type="text" name="title"  placeholder="Title" editable={this.props.editable} component={InputText} validate={validateNotEmpty} />
+        <Field name="category" placeholder="Category"  items={this.props.categories} editable={false} component={Selector} validate={validateNotEmpty}/>
         <Field type="text" name="author" placeholder="Author" editable={false} component={InputText} validate={validateNotEmpty} />
         <Field type="textarea" name="body" placeholder="Message" editable={this.props.editable} component={InputText} validate={validateNotEmpty} />
         {!this.props.editable && (
@@ -54,6 +56,8 @@ function mapStateToProps(state, ownProps) {
       title: ownProps.title,
       author: ownProps.author,
       body: ownProps.value,
+      category: ownProps.category,
+      categories: ownProps.categories,
     },
 
     editable: ownProps.editable,
