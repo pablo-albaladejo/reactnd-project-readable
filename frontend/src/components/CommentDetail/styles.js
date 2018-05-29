@@ -2,8 +2,9 @@ import { StyleSheet } from 'aphrodite';
 import Colors from '../../config/Colors';
 
 const styles = StyleSheet.create({
-    text: {
-        color: Colors.font,
+    date: {
+        color: Colors.info,
+        fontSize: 12,
     }
 })
 export default styles;

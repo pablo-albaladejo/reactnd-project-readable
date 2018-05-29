@@ -23,6 +23,7 @@ class PostScreen extends Component {
                     editing={this.props.action === 'edit'}
                 />
                 <CommentList
+                    postId={this.props.postId}
                     item={this.props.comments}
                 />
             </div>
@@ -60,6 +61,7 @@ function mapStateToProps(state, ownParams) {
 
     return {
         post,
+        postId,
         comments,
         categories,
         action,

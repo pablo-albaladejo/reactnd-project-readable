@@ -145,7 +145,7 @@ class APIService {
 
         return this.apiRequest(this.BASE_URL + this.COMMENTS_URL + "/" + commentId, this.POST_METHOD, body);
     }
-    updateComment(commentId, data){
+    updateComment(commentId, data) {
         let body = {
             timestamp: Date.now(),
             body: data.body,
@@ -155,7 +155,16 @@ class APIService {
     deleteComment(commentId) {
         return this.apiRequest(this.BASE_URL + this.COMMENTS_URL + "/" + commentId, this.DELETE_METHOD, null)
     }
-
+    addComment(postId, data) {
+        let body = {
+            id: HelperService.getInstance().generateID(),
+            timestamp: Date.now(),
+            body: data.body,
+            author: data.author,
+            parentId: postId,
+        };
+        return this.apiRequest(this.BASE_URL + this.COMMENTS_URL, this.POST_METHOD, body)
+    }
 
     /* HELPER */
     apiRequest(endpoint, method, body) {

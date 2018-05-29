@@ -1,4 +1,4 @@
-import { FETCH_POST_BY_ID, UPDATE_COMMENT_VOTESCORE, DELETE_POST, DELETE_COMMENT, REQUEST_POSTS, UPDATE_COMMENT } from "../actions/actionTypes";
+import { FETCH_POST_BY_ID, UPDATE_COMMENT_VOTESCORE, DELETE_POST, DELETE_COMMENT, REQUEST_POSTS, UPDATE_COMMENT, ADD_COMMENT } from "../actions/actionTypes";
 import { combineReducers } from 'redux';
 import ServiceFacade from "../services/ServiceFacade";
 
@@ -18,6 +18,12 @@ function comments(state = {}, action) {
             return ServiceFacade.removeByKey(state, action.comment.id);
 
         case UPDATE_COMMENT:
+            return {
+                ...state,
+                [action.comment.id]: action.comment,
+            };
+        
+        case ADD_COMMENT:
             return {
                 ...state,
                 [action.comment.id]: action.comment,

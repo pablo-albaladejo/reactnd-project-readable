@@ -8,7 +8,8 @@ import {
     UPDATE_COMMENT_VOTESCORE,
     DELETE_COMMENT,
     UPDATE_COMMENT,
-
+    ADD_COMMENT,
+    
     REQUEST_POSTS,
     REQUEST_CATEGORIES
 } from './actionTypes';
@@ -181,6 +182,22 @@ export const updateComment = (commentId, data) => dispatch => (
 export function updateCommentSync(comment) {
     return {
         type: UPDATE_COMMENT,
+        comment,
+    }
+}
+
+export const addComment = (postId, data) => dispatch => (
+    ServiceFacade.addComment(postId, data)
+        .then(comment => {
+            dispatch(addCommentSync(comment));
+        }).catch(err => {
+            console.warn(err);
+        })
+);
+
+export function addCommentSync(comment) {
+    return {
+        type: ADD_COMMENT,
         comment,
     }
 }

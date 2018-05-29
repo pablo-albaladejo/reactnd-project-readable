@@ -23,9 +23,6 @@ const styles = StyleSheet.create({
     },
 
     addButton:{
-        color: Colors.clear,
-        backgroundColor: Colors.primary,
-        borderColor: Colors.primary,
         float: 'right',
         margin: "1.5% 5%"
     }

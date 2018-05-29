@@ -12,6 +12,7 @@ import EditButton from '../../Buttons/Edit';
 import DeleteButton from '../../Buttons/Delete';
 import SaveButton from '../../Buttons/Save';
 import CancelButton from '../../Buttons/Cancel';
+import NewButton from '../../Buttons/New';
 
 const validateNotEmpty = value => !value ? 'Must enter a value' : null
 
@@ -21,23 +22,22 @@ class CommentForm extends Component {
     editable: false,
   }
 
-  ons
-
   render() {
     const { invalid, handleSubmit } = this.props
     return (
       <form>
 
-        <Field name="body" editable={this.state.editable} component={InputText} validate={validateNotEmpty} />
+        <Field type="text" name="author" placeholder={"Author"} editable={this.props.isNew} component={InputText} validate={validateNotEmpty} />
+        <Field type="textarea" name="body" placeholder={"Comment"} editable={this.state.editable || this.props.isNew} component={InputText} validate={validateNotEmpty} />
 
-        {!this.state.editable && (
+        {!this.state.editable && !this.props.isNew && (
           <div>
             <EditButton onClick={() => this.setState({ editable: true })} />{' '}
             <DeleteButton onClick={() => { this.props.onDelete(); this.props.dispatch(reset('commentForm')); }} />
           </div>
         )}
 
-        {this.state.editable && (
+        {this.state.editable && !this.props.isNew && (
           <div>
             <SaveButton disabled={invalid} onClick={
               handleSubmit((data) => {
@@ -51,6 +51,16 @@ class CommentForm extends Component {
               this.props.dispatch(reset(this.props.form));
             }} />
           </div>
+        )}
+
+        {this.props.isNew && (
+          <NewButton
+            onClick={
+              handleSubmit((data) => {
+                this.props.onAdd(data);
+              })
+            }
+          />
         )}
 
       </form>
@@ -69,10 +79,14 @@ function mapStateToProps(state, ownProps) {
 
     initialValues: {
       body: ownProps.value,
+      author: ownProps.author,
     },
+
+    isNew: ownProps.isNew,
 
     onSave: ownProps.onSave,
     onDelete: ownProps.onDelete,
+    onAdd: ownProps.onAdd,
   }
 }
 export default connect(mapStateToProps)(Form);

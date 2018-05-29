@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import { withRouter, Link } from 'react-router-dom';
 
-import { Table, Button } from 'reactstrap';
+import { Table } from 'reactstrap';
 import moment from 'moment';
 
 import { connect } from 'react-redux';
@@ -18,8 +18,10 @@ import VoteScore from '../../components/VoteScore';
 
 import { css } from 'aphrodite';
 import styles from './styles';
+
 import EditButton from '../Buttons/Edit';
 import DeleteButton from '../Buttons/Delete';
+import NewButton from '../Buttons/New';
 
 class PostList extends Component {
 
@@ -103,7 +105,7 @@ class PostList extends Component {
 
         return (
             <div>
-                <Button className={css(styles.addButton)}><i className="fa fa-plus" /> New post</Button>
+                <NewButton />
                 <Table hover>
                     <thead>
                         <tr>

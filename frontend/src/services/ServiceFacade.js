@@ -42,6 +42,9 @@ class ServiceFacade {
     static deleteComment(commentId){
         return APIService.getInstance().deleteComment(commentId);
     }
+    static addComment(postId, data){
+        return APIService.getInstance().addComment(postId, data);
+    }
 
     /* Helper */
     static removeByKey(myObj, deleteKey){

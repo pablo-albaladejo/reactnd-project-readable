@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 
 import {
     Card, CardBody,
-    CardSubtitle,
 } from 'reactstrap';
+
+import moment from 'moment';
 
 import { connect } from 'react-redux';
 
@@ -12,7 +13,8 @@ import {
     updateCommentVoteScore,
     deleteComment,
     updateComment,
-} from '../../actions/';
+    addComment,
+} from '../../actions';
 
 import { css } from 'aphrodite';
 import styles from './styles';
@@ -44,28 +46,46 @@ class CommentDetail extends Component {
         this.props.dispatch(deleteComment(commentId));
     }
 
+    onAddComment = (data) => {
+        this.props.dispatch(addComment(this.props.postId, data));
+    }
+
     render() {
-        const { id, voteScore, author, body } = this.props.comment;
+        let isNew = !this.props.comment;
+
+        let id = isNew ? -1 : this.props.comment.id;
+        let voteScore = isNew ? 0 : this.props.comment.voteScore;
+        let author = isNew ? null : this.props.comment.author;
+        let body = isNew ? null : this.props.comment.body;
+        let timestamp = isNew ? null : this.props.comment.timestamp;
+
         let key = this.props.index;
+        
         return (
             <Card>
                 <CardBody>
 
-                    <VoteScore
-                        id={id}
-                        value={voteScore}
-                        onDownVote={this.onDownVote}
-                        onUpVote={this.onUpVote}
-                    />
+                    {this.props.comment && (
+                        <VoteScore
+                            id={id}
+                            value={voteScore}
+                            onDownVote={this.onDownVote}
+                            onUpVote={this.onUpVote}
+                        />
+                    )}
 
-                    <CardSubtitle><span className={css(styles.text)}>{author}</span></CardSubtitle>
+                    {this.props.comment && (
+                        <span className={css(styles.date)}>{"Last edit: " + moment(timestamp).format("LLL")}</span>
+                    )}
 
                     <CommentForm
+                        isNew={isNew}
                         form={'commentForm_' + key} //https://github.com/erikras/redux-form/issues/28
-
+                        author={author}
                         value={body}
                         onSave={(data) => this.onSaveComment(id, data)}
                         onDelete={() => this.onDeleteComment(id)}
+                        onAdd={(data) => this.onAddComment(data)}
                     />
 
                 </CardBody>
