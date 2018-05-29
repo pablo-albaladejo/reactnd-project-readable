@@ -62,7 +62,7 @@ class PostDetails extends Component {
                                 onDownVote={this.onDownVote}
                                 onUpVote={this.onUpVote}
                             />
-                            <span className={css(styles.date)}>{moment(this.props.timestamp).format("DD/MM/YY HH:MM:ss")}</span>
+                            <span className={css(styles.date)}>{moment(this.props.timestamp).format("DD/MM/YY HH:mm:ss")}</span>
                         </CardTitle>
                         <PostForm
                             editable={this.props.editing}
