@@ -145,6 +145,13 @@ class APIService {
 
         return this.apiRequest(this.BASE_URL + this.COMMENTS_URL + "/" + commentId, this.POST_METHOD, body);
     }
+    updateComment(commentId, data){
+        let body = {
+            timestamp: Date.now(),
+            body: data.body,
+        }
+        return this.apiRequest(this.BASE_URL + this.COMMENTS_URL + "/" + commentId, this.PUT_METHOD, body)
+    }
     deleteComment(commentId) {
         return this.apiRequest(this.BASE_URL + this.COMMENTS_URL + "/" + commentId, this.DELETE_METHOD, null)
     }

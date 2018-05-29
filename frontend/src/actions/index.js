@@ -7,6 +7,7 @@ import {
     UPDATE_POST_VOTESCORE,
     UPDATE_COMMENT_VOTESCORE,
     DELETE_COMMENT,
+    UPDATE_COMMENT,
 
     REQUEST_POSTS,
     REQUEST_CATEGORIES
@@ -16,7 +17,7 @@ import ServiceFacade from '../services/ServiceFacade';
 
 /* POSTS */
 /* getAllPosts */
-export const getAllPosts = (category) => dispatch => { 
+export const getAllPosts = (category) => dispatch => {
     dispatch(requestPosts());
     ServiceFacade.getAllPosts(category)
         .then(posts => {
@@ -24,7 +25,7 @@ export const getAllPosts = (category) => dispatch => {
         }).catch(err => {
             console.warn(err);
         })
-    };
+};
 
 export function fetchAllPosts(posts) {
     return {
@@ -102,7 +103,7 @@ export const getAllCategories = () => dispatch => {
         }).catch(err => {
             console.warn(err);
         })
-    };
+};
 
 export function requestCategories() {
     return {
@@ -165,5 +166,21 @@ export function deleteCommentSync(commentId) {
     return {
         type: DELETE_COMMENT,
         commentId,
+    }
+}
+
+export const updateComment = (commentId, data) => dispatch => (
+    ServiceFacade.updateComment(commentId, data)
+        .then(comment => {
+            dispatch(updateCommentSync(comment));
+        }).catch(err => {
+            console.warn(err);
+        })
+);
+
+export function updateCommentSync(comment) {
+    return {
+        type: UPDATE_COMMENT,
+        comment,
     }
 }

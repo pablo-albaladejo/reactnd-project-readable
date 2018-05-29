@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import {
     Card, CardBody,
     CardSubtitle,
-    FormGroup, Input
 } from 'reactstrap';
 
 import { connect } from 'react-redux';
@@ -11,14 +10,14 @@ import { connect } from 'react-redux';
 import VoteScore from '../VoteScore';
 import {
     updateCommentVoteScore,
-    deleteComment
+    deleteComment,
+    updateComment,
 } from '../../actions/';
-
-import EditButton from '../Buttons/Edit';
-import DeleteButton from '../Buttons/Delete';
 
 import { css } from 'aphrodite';
 import styles from './styles';
+
+import CommentForm from '../Forms/CommentForm';
 
 class CommentDetail extends Component {
 
@@ -29,15 +28,6 @@ class CommentDetail extends Component {
         voteScore: null,
     }
 
-    componentWillMount() {
-        this.setState({
-            author: this.props.comment.author,
-            body: this.props.comment.body,
-            id: this.props.comment.id,
-            voteScore: this.props.comment.voteScore,
-        });
-    }
-
     onDownVote = (commentId) => {
         this.props.dispatch(updateCommentVoteScore(commentId, false));
     }
@@ -46,8 +36,8 @@ class CommentDetail extends Component {
         this.props.dispatch(updateCommentVoteScore(commentId, true));
     }
 
-    oEditComment = (commentId) => {
-
+    onSaveComment = (commentId, data) => {
+        this.props.dispatch(updateComment(commentId, data));
     }
 
     onDeleteComment = (commentId) => {
@@ -55,39 +45,28 @@ class CommentDetail extends Component {
     }
 
     render() {
-
+        const { id, voteScore, author, body } = this.props.comment;
         return (
             <Card>
                 <CardBody>
 
                     <VoteScore
-                        id={this.state.id}
-                        value={this.state.voteScore}
+                        id={id}
+                        value={voteScore}
                         onDownVote={this.onDownVote}
                         onUpVote={this.onUpVote}
                     />
 
-                    <CardSubtitle><span className={css(styles.text)}>{this.state.author}</span></CardSubtitle>
-                    
-                    <FormGroup>
-                        <Input
-                            readOnly={!this.props.editing}
-                            type="textarea"
-                            name="postBody"
-                            id="postBody"
-                            value={this.state.body}
-                            onChange={(event) => {
-                                this.setState({
-                                    body: event.target.value,
-                                })
-                            }}
-                        />
-                    </FormGroup>
+                    <CardSubtitle><span className={css(styles.text)}>{author}</span></CardSubtitle>
 
-                    <div>
-                        <EditButton onClick={() => this.oEditComment(this.state.id)} />{' '}
-                        <DeleteButton onClick={() => this.onDeleteComment(this.state.id)} />
-                    </div>
+                    <CommentForm
+                        form={id} //https://github.com/erikras/redux-form/issues/28
+                        
+                        value={body}
+                        onSave={(data) => this.onSaveComment(id, data)}
+                        onDelete={() => this.onDeleteComment(id)}
+                    />
+
                 </CardBody>
             </Card>
         );
