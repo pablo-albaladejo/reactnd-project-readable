@@ -5,7 +5,7 @@ import HelperService from "./HelperService";
 import CommentService from "./CommentService";
 
 class PostService {
-    
+
     static _instance = null;
 
     static getInstance() {
@@ -48,16 +48,17 @@ class PostService {
                 //get post comments
                 CommentService.getInstance().getAllComments(postId)
             ]).then(result => {
-
+                
                 //post details
                 let post = {};
-                post[postId] = result[0];
-
+                post[postId] = Object.keys(result[0]).length > 0 ? result[0] : {error: "Empty response"};
+                
                 //post comments
-                let comments = result[1]
+                let comments = {};
+                comments = result[1];
 
                 resolve([post, comments]);
-            })
+            });
         });
     }
 

@@ -13,10 +13,10 @@ const CategoryBreadcrumb = ({ match }) =>
 
 // define some custom breadcrumbs for certain routes (optional)
 const routes = [
-  { path: '/new', breadcrumb: 'New Post' },
-  { path: '/:category/:postId', breadcrumb: 'Post details' },
   { path: '/error/', breadcrumb: null },
   { path: '/error/:type', breadcrumb: 'Error' },
+  { path: '/new', breadcrumb: 'New Post' },
+  { path: '/:category/:postId', breadcrumb: 'Post details' },
   { path: '/:category', breadcrumb: CategoryBreadcrumb },
 ];
 

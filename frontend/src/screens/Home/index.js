@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import Loadable from 'react-loading-overlay';
 
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 
 import Breadcrumbs from '../../components/Breadcrumbs';
 
@@ -28,6 +28,10 @@ class Home extends Component {
           <h1 className={css(styles.title)}>Readable</h1>
           <Breadcrumbs />
           <Switch>
+
+            {/* Error */}
+            <Route exact path='/error/notfound' component={NotFoundScreen} />
+            
             {/* New post */}
             <Route exact path='/new' component={PostScreen} />
             
@@ -37,10 +41,6 @@ class Home extends Component {
             {/* PostList */}
             <Route exact path='/:category' component={PostListScreen} />
             <Route exact path='/' component={PostListScreen} />
-
-            {/* Error */}
-            <Route exact path='/error/notfound' component={NotFoundScreen} />
-            <Redirect from="/:other" to="/error/notfound" />
 
           </Switch>
         </div>

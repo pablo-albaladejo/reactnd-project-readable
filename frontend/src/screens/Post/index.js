@@ -11,8 +11,12 @@ import CommentList from '../../components/CommentList';
 class PostScreen extends Component {
 
     componentWillMount() {
-        if (!this.props.isNew) this.props.dispatch(getPostById(this.props.postId));
-        this.props.dispatch(getAllCategories());
+        let actions = [];
+        
+        actions.push(getAllCategories());
+        if (!this.props.isNew) actions.push(getPostById(this.props.postId));
+
+        actions.forEach(this.props.dispatch);
     }
 
     render() {
@@ -45,6 +49,10 @@ function mapStateToProps(state, ownParams) {
 
     if (state.posts.ids) {
         post = state.posts.ids[postId];
+        
+        if (post && post.error) {
+            ownParams.history.push('/error/notfound');
+        }
     }
 
     //comments
