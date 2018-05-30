@@ -35,7 +35,6 @@ class PostDetails extends Component {
     }
 
     onEditPost = (category, postId) => {
-
         this.props.history.push('/' + category + '/' + postId + '/edit');
     }
 
@@ -90,7 +89,7 @@ class PostDetails extends Component {
                             title={this.props.title}
                             author={this.props.author}
                             value={this.props.body}
-                            category={this.props.category}
+                            category={this.props.category.id}
                             categories={this.props.categories}
                             onEdit={() => this.onEditPost(this.props.category.path, this.props.id)}
                             onCancel={() => this.onCancelEdit(this.props.category.path, this.props.id)}
