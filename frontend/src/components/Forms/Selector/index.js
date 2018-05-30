@@ -5,16 +5,6 @@ import styles from './styles';
 
 class Selector extends Component {
 
-    state = {
-        dropdownOpen: false,
-    };
-
-    toggle = () => {
-        this.setState({
-            dropdownOpen: !this.state.dropdownOpen
-        });
-    }
-
     render() {
         const { input, editable, placeholder, items, meta: { touched, error } } = this.props;
         return (
