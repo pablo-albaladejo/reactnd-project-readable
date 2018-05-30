@@ -39,18 +39,18 @@ export const getPostById = (postId) => dispatch => {
             console.warn(err);
         })
 };
-export function requestPosts() {
-    return {
-        type: REQUEST_POSTS,
-    }
-}
-
-//fetch post
 export function fetchPostById(post, comments) {
     return {
         type: FETCH_POST_BY_ID,
         post,
         comments,
+    }
+}
+
+//request post
+export function requestPosts() {
+    return {
+        type: REQUEST_POSTS,
     }
 }
 

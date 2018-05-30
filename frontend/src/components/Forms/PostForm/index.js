@@ -4,10 +4,10 @@
 import React, { Component } from 'react'
 
 import { connect } from 'react-redux';
-import { Field, reduxForm, reset } from 'redux-form'
+import { Field, reduxForm, reset } from 'redux-form';
 
-import InputText from '../InputText'
-import Selector from '../Selector'
+import InputText from '../InputText';
+import Selector from '../Selector';
 
 import EditButton from '../../Buttons/Edit';
 import DeleteButton from '../../Buttons/Delete';
