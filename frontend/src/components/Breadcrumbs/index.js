@@ -8,19 +8,13 @@ import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
 import { css } from 'aphrodite';
 import styles from './styles';
 
-// breadcrumbs can be any type of component or string
-const UserBreadcrumb = ({ match }) =>
-  <span>{match.params.userId}</span>; // use match param userId to fetch/display user name
-
 const CategoryBreadcrumb = ({ match }) =>
   <span>Category: {match.params.category}</span>; // use match param userId to fetch/display user name
 
 // define some custom breadcrumbs for certain routes (optional)
 const routes = [
-  { path: '/users/:userId', breadcrumb: UserBreadcrumb },
-  { path: '/example', breadcrumb: 'Custom Example' },
-  { path: '/posts/', breadcrumb: null },
-  { path: '/posts/:postId', breadcrumb: 'Post details' },
+  { path: '/new', breadcrumb: 'New Post' },
+  { path: '/:category/:postId', breadcrumb: 'Post details' },
   { path: '/error/', breadcrumb: null },
   { path: '/error/:type', breadcrumb: 'Error' },
   { path: '/:category', breadcrumb: CategoryBreadcrumb },

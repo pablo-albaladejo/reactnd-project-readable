@@ -54,8 +54,8 @@ class PostList extends Component {
         this.props.dispatch(updatePostVoteScore(postId, true));
     }
 
-    onEditPost = (postId) => {
-        this.props.history.push('/posts/' + postId + '/edit');
+    onEditPost = (post) => {
+        this.props.history.push(post.category + '/' + post.id + '/edit');
     }
 
     onDeletePost = (postId) => {
@@ -69,7 +69,7 @@ class PostList extends Component {
     }
 
     onAddPost = () => {
-        this.props.history.push('/posts/new');
+        this.props.history.push('/new');
     }
 
     orderByCriteria = (list, criteria) => {
@@ -109,7 +109,7 @@ class PostList extends Component {
 
         return (
             <div>
-                <div className={css(styles.addButton)}><NewButton onClick={() => this.onAddPost()}/></div>
+                <div className={css(styles.addButton)}><NewButton onClick={() => this.onAddPost()} /></div>
                 <Table hover>
                     <thead>
                         <tr>
@@ -148,13 +148,13 @@ class PostList extends Component {
                                             onUpVote={this.onUpVote}
                                         />
                                     </td>
-                                    <td><Link className={css(styles.link)} to={'/posts/' + post.id}>{post.title}</Link></td>
+                                    <td><Link className={css(styles.link)} to={post.category + '/' + post.id}>{post.title}</Link></td>
                                     <td><span className={css(styles.text)}>{post.author}</span></td>
                                     <td><span className={css(styles.text)}>{post.commentCount}</span></td>
                                     <td><span className={css(styles.text)}>{post.category}</span></td>
                                     <td><span className={css(styles.text)}>{moment(post.timestamp).fromNow()}</span></td>
                                     <td>
-                                        <EditButton onClick={() => this.onEditPost(post.id)} />{' '}
+                                        <EditButton onClick={() => this.onEditPost(post)} />{' '}
                                         <DeleteButton onClick={() => this.onDeletePost(post.id)} />
                                     </td>
                                 </tr>

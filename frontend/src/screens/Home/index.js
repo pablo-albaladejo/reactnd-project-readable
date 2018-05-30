@@ -28,11 +28,11 @@ class Home extends Component {
           <h1 className={css(styles.title)}>Readable</h1>
           <Breadcrumbs />
           <Switch>
-            {/* Post */}
-            <Route exact path='/posts/:id/:action?/' component={PostScreen} />
-
             {/* New post */}
-            <Route exact path='/posts/new' component={PostScreen} />
+            <Route exact path='/new' component={PostScreen} />
+            
+            {/* Post */}
+            <Route exact path='/:category/:id/:action?/' component={PostScreen} />
 
             {/* PostList */}
             <Route exact path='/:category' component={PostListScreen} />

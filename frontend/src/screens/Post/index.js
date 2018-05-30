@@ -41,7 +41,7 @@ function mapStateToProps(state, ownParams) {
     let postId = ownParams.match.params.id;
     let action = ownParams.match.params.action;
 
-    let isNew = postId === 'new';
+    let isNew = ownParams.match.path === '/new';
 
     if (state.posts.ids) {
         post = state.posts.ids[postId];

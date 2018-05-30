@@ -34,8 +34,9 @@ class PostDetails extends Component {
         this.props.dispatch(updatePostVoteScore(postId, true));
     }
 
-    onEditPost = (postId) => {
-        this.props.history.push('/posts/' + postId + '/edit');
+    onEditPost = (category, postId) => {
+
+        this.props.history.push('/' + category + '/' + postId + '/edit');
     }
 
     onDeletePost = (postId) => {
@@ -43,12 +44,12 @@ class PostDetails extends Component {
         this.props.history.push('/');
     }
 
-    onCancelEdit = (postId) => {
-        this.props.history.push('/posts/' + postId);
+    onCancelEdit = (category, postId) => {
+        this.props.history.push('/' + category + '/' + postId);
     }
-    onSavePost = (postId, data) => {
+    onSavePost = (category, postId, data) => {
         this.props.dispatch(editPost(postId, data.title, data.body));
-        this.props.history.push('/posts/' + postId);
+        this.props.history.push('/' + category + '/' + postId);
     }
     onAddPost = (data) => {
         let post = {
@@ -91,9 +92,9 @@ class PostDetails extends Component {
                             value={this.props.body}
                             category={this.props.category}
                             categories={this.props.categories}
-                            onEdit={() => this.onEditPost(this.props.id)}
-                            onCancel={() => this.onCancelEdit(this.props.id)}
-                            onSave={(data) => this.onSavePost(this.props.id, data)}
+                            onEdit={() => this.onEditPost(this.props.category.path, this.props.id)}
+                            onCancel={() => this.onCancelEdit(this.props.category.path, this.props.id)}
+                            onSave={(data) => this.onSavePost(this.props.category.path, this.props.id, data)}
                             onDelete={() => this.onDeletePost(this.props.id)}
                             onAdd={(data) => this.onAddPost(data)}
                         />
@@ -129,7 +130,10 @@ function mapStateToProps(state, ownProps) {
         var found = categories.find(category => {
             return category.path === post.category
         });
-        if (found) category = found.id;
+
+        if (found) {
+            category = found;
+        }
     }
 
     return {
